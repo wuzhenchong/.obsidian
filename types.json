@@ -3,7 +3,7 @@
     "aliases": "aliases",
     "cssclasses": "multitext",
     "tags": "tags",
-    "status": "multitext",
+    "status": "text",
     "priority": "number",
     "打分": "number",
     "研究方向": "multitext",

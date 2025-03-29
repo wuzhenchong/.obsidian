@@ -1,5 +1,42 @@
 {
-  "userAdmonitions": {},
+  "userAdmonitions": {
+    "time": {
+      "type": "time",
+      "color": "80, 200, 120",
+      "icon": {
+        "name": "lucide-timer",
+        "type": "obsidian"
+      },
+      "command": false,
+      "injectColor": true,
+      "noTitle": false,
+      "copy": false
+    },
+    "tasks": {
+      "type": "tasks",
+      "color": "74, 144, 226",
+      "icon": {
+        "name": "tasks",
+        "type": "font-awesome"
+      },
+      "command": false,
+      "injectColor": true,
+      "noTitle": false,
+      "copy": false
+    },
+    "notebook": {
+      "type": "notebook",
+      "color": "255, 165, 0",
+      "icon": {
+        "name": "lucide-notebook-pen",
+        "type": "obsidian"
+      },
+      "command": false,
+      "injectColor": true,
+      "noTitle": false,
+      "copy": false
+    }
+  },
   "syntaxHighlight": false,
   "copyButton": false,
   "version": "10.3.2",

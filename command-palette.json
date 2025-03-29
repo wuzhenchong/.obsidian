@@ -1,8 +1,8 @@
 {
   "pinned": [
-    "editor:save-file",
+    "insert-current-date",
+    "templater-obsidian:insert-templater",
     "obsidian-tasks-plugin:edit-task",
-    "editor:rename-heading",
     "quickadd:runQuickAdd"
   ]
 }

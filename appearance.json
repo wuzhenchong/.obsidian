@@ -1,13 +1,15 @@
 {
   "accentColor": "",
-  "cssTheme": "Blue Topaz",
+  "cssTheme": "Border",
   "theme": "moonstone",
   "interfaceFontFamily": "",
-  "baseFontSize": 20,
+  "baseFontSize": 18,
   "monospaceFontFamily": "Consolas",
   "nativeMenus": false,
   "translucency": false,
   "enabledCssSnippets": [],
   "showViewHeader": true,
-  "baseFontSizeAction": false
+  "baseFontSizeAction": true,
+  "showRibbon": true,
+  "textFontFamily": "仓耳今楷01"
 }

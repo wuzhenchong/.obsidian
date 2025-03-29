@@ -1,7 +1,6 @@
 [
   "obsidian-kanban",
   "dataview",
-  "obsidian-day-planner",
   "obsidian-mind-map",
   "quickadd",
   "obsidian-emoji-toolbar",
@@ -15,17 +14,14 @@
   "obsidian-admonition",
   "obsidian-annotator",
   "nldates-obsidian",
-  "obsidian-projects",
-  "open-gate",
   "obsidian-latex-suite",
   "templater-obsidian",
   "tag-wrangler",
   "obsidian-citation-plugin",
-  "dbfolder",
   "editing-toolbar",
-  "tasks-calendar-wrapper",
   "obsidian-outliner",
   "obsidian-meta-bind-plugin",
-  "obsidian-memos",
-  "remotely-save"
+  "remotely-save",
+  "obsidian-custom-attachment-location",
+  "dbfolder"
 ]

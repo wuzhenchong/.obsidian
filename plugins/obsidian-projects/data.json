@@ -218,7 +218,11 @@
     "locale": {
       "firstDayOfWeek": "default"
     },
-    "commands": [],
+    "commands": [
+      {
+        "project": "3a736013-0d7f-44a4-97f5-32f919564f9d"
+      }
+    ],
     "linkBehavior": "open-editor"
   }
 }

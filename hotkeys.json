@@ -47,7 +47,14 @@
   ],
   "easy-typing-obsidian:easy-typing-delete-blank-line": [],
   "obsidian-citation-plugin:insert-citation": [],
-  "templater-obsidian:insert-templater": [],
+  "templater-obsidian:insert-templater": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "T"
+    }
+  ],
   "obsidian-excalidraw-plugin:insert-link": [],
   "obsidian-excalidraw-plugin:insert-link-to-element": [],
   "obsidian-excalidraw-plugin:save": [],
@@ -57,6 +64,24 @@
         "Mod"
       ],
       "key": "S"
+    }
+  ],
+  "editor:delete-paragraph": [],
+  "editor:open-search": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "F"
+    }
+  ],
+  "graph:open": [],
+  "editor:toggle-highlight": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "G"
     }
   ]
 }

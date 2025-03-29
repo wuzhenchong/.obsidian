@@ -8,7 +8,7 @@
     "#task",
     "#科研",
     "#学习",
-    "#锻炼"
+    "#运动"
   ],
   "fileIncludeTags": [],
   "useExcludeTags": false,
@@ -17,7 +17,7 @@
   "styles": [
     "style1"
   ],
-  "dailyNoteFolder": "1 日记/2024",
+  "dailyNoteFolder": "1日记/2024",
   "dailyNoteFormat": "YYYY-MM-DD",
   "sectionForNewTasks": "## Tasks",
   "hideTags": [
@@ -41,9 +41,9 @@
   "tagColorPalette": {
     "#TODO": "#339988",
     "#TEST": "#998877",
-    "#锻炼": "#02cabd",
-    "#科研": "#bd0000",
-    "#学习": "#b37100"
+    "#学习": "#b58a12",
+    "#科研": "#af1818",
+    "#运动": "#15b5c1"
   },
   "useCounters": true,
   "counterBehavior": "Focus",
@@ -62,6 +62,6 @@
   ],
   "defaultTodayFocus": true,
   "defaultFilters": "todoFilter",
-  "useBuiltinStyle": true,
+  "useBuiltinStyle": false,
   "convert24HourTimePrefix": false
 }
