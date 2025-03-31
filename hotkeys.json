@@ -20,14 +20,6 @@
   "editor:save-file": [],
   "file-explorer:new-file-in-new-pane": [],
   "workspace:new-tab": [],
-  "insert-template": [
-    {
-      "modifiers": [
-        "Alt"
-      ],
-      "key": "T"
-    }
-  ],
   "editor:toggle-checklist-status": [],
   "editor:cycle-list-checklist": [
     {
@@ -50,6 +42,12 @@
   "templater-obsidian:insert-templater": [
     {
       "modifiers": [
+        "Alt"
+      ],
+      "key": "T"
+    },
+    {
+      "modifiers": [
         "Mod"
       ],
       "key": "T"
@@ -58,14 +56,6 @@
   "obsidian-excalidraw-plugin:insert-link": [],
   "obsidian-excalidraw-plugin:insert-link-to-element": [],
   "obsidian-excalidraw-plugin:save": [],
-  "obsidian-git:push": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "S"
-    }
-  ],
   "editor:delete-paragraph": [],
   "editor:open-search": [
     {
@@ -82,6 +72,53 @@
         "Mod"
       ],
       "key": "G"
+    }
+  ],
+  "workspace:close": [],
+  "calendar:open-weekly-note": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "W"
+    }
+  ],
+  "insert-current-date": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "D"
+    }
+  ],
+  "obsidian-git:backup-and-close": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "S"
+    },
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "S"
+    }
+  ],
+  "quickadd:runQuickAdd": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "Q"
+    }
+  ],
+  "workspace:previous-tab": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": "PageUp"
     }
   ]
 }

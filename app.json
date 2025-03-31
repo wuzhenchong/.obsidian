@@ -3,7 +3,7 @@
   "strictLineBreaks": false,
   "showFrontmatter": true,
   "showLineNumber": false,
-  "newFileLocation": "root",
+  "newFileLocation": "folder",
   "useMarkdownLinks": true,
   "attachmentFolderPath": "_attach",
   "alwaysUpdateLinks": true,
@@ -12,7 +12,7 @@
   "readableLineLength": true,
   "foldIndent": true,
   "livePreview": true,
-  "defaultViewMode": "preview",
+  "defaultViewMode": "source",
   "spellcheck": false,
   "spellcheckLanguages": null,
   "focusNewTab": true,
@@ -23,5 +23,6 @@
     "landscape": false,
     "margin": "0",
     "downscalePercent": 100
-  }
+  },
+  "newFileFolderPath": "Temps"
 }

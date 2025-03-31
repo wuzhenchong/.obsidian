@@ -3,6 +3,8 @@
     "insert-current-date",
     "templater-obsidian:insert-templater",
     "obsidian-tasks-plugin:edit-task",
-    "quickadd:runQuickAdd"
+    "quickadd:runQuickAdd",
+    "obsidian-git:pull",
+    "obsidian-git:backup-and-close"
   ]
 }

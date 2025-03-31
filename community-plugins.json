@@ -21,7 +21,7 @@
   "editing-toolbar",
   "obsidian-outliner",
   "obsidian-meta-bind-plugin",
-  "remotely-save",
   "obsidian-custom-attachment-location",
-  "dbfolder"
+  "dbfolder",
+  "obsidian-git"
 ]

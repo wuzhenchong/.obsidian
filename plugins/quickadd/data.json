@@ -1,8 +1,15 @@
 {
   "choices": [
     {
+      "id": "8d3e787f-ad69-466d-8a71-59e7a72e95ca",
+      "name": "push and close",
+      "type": "Macro",
+      "command": false,
+      "macroId": "5e1ab109-9103-40f9-a7f4-d35c5fd8f577"
+    },
+    {
       "id": "6610f3bf-9e55-4354-96cf-f384439d0e8f",
-      "name": "保存并关闭",
+      "name": "网盘同步并关闭",
       "type": "Macro",
       "command": false,
       "macroId": "65fcd7c0-c73f-47f7-a278-f57bd4c8ec72"
@@ -51,13 +58,32 @@
         }
       ],
       "runOnStartup": false
+    },
+    {
+      "name": "push and close",
+      "id": "5e1ab109-9103-40f9-a7f4-d35c5fd8f577",
+      "commands": [
+        {
+          "name": "保存当前文件",
+          "type": "Obsidian",
+          "id": "4c52c8c3-33ca-40e1-9e44-5992c745a334",
+          "commandId": "editor:save-file"
+        },
+        {
+          "name": "Git: Commit-and-sync and then close Obsidian",
+          "type": "Obsidian",
+          "id": "52e089c5-56ee-4ad7-a136-3988e38ff75e",
+          "commandId": "obsidian-git:backup-and-close"
+        }
+      ],
+      "runOnStartup": false
     }
   ],
   "inputPrompt": "single-line",
   "devMode": false,
   "templateFolderPath": "模板",
   "announceUpdates": true,
-  "version": "1.11.5",
+  "version": "1.13.2",
   "disableOnlineFeatures": true,
   "enableRibbonIcon": true,
   "ai": {

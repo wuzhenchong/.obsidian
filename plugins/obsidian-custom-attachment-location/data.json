@@ -11,6 +11,10 @@
   "shouldRenameAttachmentFolder": true,
   "shouldRenameAttachmentsToLowerCase": false,
   "shouldRenameCollectedAttachments": false,
-  "whitespaceReplacement": "-",
-  "customTokensStr": ""
+  "specialCharacters": " ",
+  "specialCharactersReplacement": "-",
+  "warningVersion": "7.1.0",
+  "customTokensStr": "",
+  "excludePaths": [],
+  "includePaths": []
 }
