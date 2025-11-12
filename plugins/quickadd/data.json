@@ -5,77 +5,73 @@
       "name": "push and close",
       "type": "Macro",
       "command": false,
-      "macroId": "5e1ab109-9103-40f9-a7f4-d35c5fd8f577"
+      "macro": {
+        "id": "5e1ab109-9103-40f9-a7f4-d35c5fd8f577",
+        "name": "sync git and close",
+        "commands": [
+          {
+            "name": "保存当前文件",
+            "type": "Obsidian",
+            "id": "4c52c8c3-33ca-40e1-9e44-5992c745a334",
+            "commandId": "editor:save-file"
+          },
+          {
+            "name": "Git: Commit-and-sync and then close Obsidian",
+            "type": "Obsidian",
+            "id": "52e089c5-56ee-4ad7-a136-3988e38ff75e",
+            "commandId": "obsidian-git:backup-and-close"
+          }
+        ]
+      },
+      "runOnStartup": false
     },
     {
       "id": "6610f3bf-9e55-4354-96cf-f384439d0e8f",
       "name": "网盘同步并关闭",
       "type": "Macro",
       "command": false,
-      "macroId": "65fcd7c0-c73f-47f7-a278-f57bd4c8ec72"
-    }
-  ],
-  "macros": [
-    {
-      "name": "remote保存-20s-关闭",
-      "id": "65fcd7c0-c73f-47f7-a278-f57bd4c8ec72",
-      "commands": [
-        {
-          "name": "保存当前文件",
-          "type": "Obsidian",
-          "id": "138b6411-e024-4cda-b18c-f653924d3602",
-          "commandId": "editor:save-file"
-        },
-        {
-          "name": "关闭其他标签页",
-          "type": "Obsidian",
-          "id": "b80da0fe-ce02-4599-a0a5-87fcf971c0a7",
-          "commandId": "workspace:close-others"
-        },
-        {
-          "name": "关闭当前标签页",
-          "type": "Obsidian",
-          "id": "540cfa0b-1b47-4493-9b44-b5bfa9a8020d",
-          "commandId": "workspace:close"
-        },
-        {
-          "name": "Remotely Save: 开始同步（start sync）",
-          "type": "Obsidian",
-          "id": "97fe0a57-6bac-49ca-bd7d-45c563a85efb",
-          "commandId": "remotely-save:start-sync"
-        },
-        {
-          "name": "Wait",
-          "type": "Wait",
-          "id": "b7260ae2-4432-4818-840f-df0c86d59a77",
-          "time": 20000
-        },
-        {
-          "name": "关闭",
-          "type": "Obsidian",
-          "id": "bb225719-14d2-4637-8846-2ce519c63bb4",
-          "commandId": "workspace:close-window"
-        }
-      ],
-      "runOnStartup": false
-    },
-    {
-      "name": "push and close",
-      "id": "5e1ab109-9103-40f9-a7f4-d35c5fd8f577",
-      "commands": [
-        {
-          "name": "保存当前文件",
-          "type": "Obsidian",
-          "id": "4c52c8c3-33ca-40e1-9e44-5992c745a334",
-          "commandId": "editor:save-file"
-        },
-        {
-          "name": "Git: Commit-and-sync and then close Obsidian",
-          "type": "Obsidian",
-          "id": "52e089c5-56ee-4ad7-a136-3988e38ff75e",
-          "commandId": "obsidian-git:backup-and-close"
-        }
-      ],
+      "macro": {
+        "id": "65fcd7c0-c73f-47f7-a278-f57bd4c8ec72",
+        "name": "remote保存-20s-关闭",
+        "commands": [
+          {
+            "name": "保存当前文件",
+            "type": "Obsidian",
+            "id": "138b6411-e024-4cda-b18c-f653924d3602",
+            "commandId": "editor:save-file"
+          },
+          {
+            "name": "关闭其他标签页",
+            "type": "Obsidian",
+            "id": "b80da0fe-ce02-4599-a0a5-87fcf971c0a7",
+            "commandId": "workspace:close-others"
+          },
+          {
+            "name": "关闭当前标签页",
+            "type": "Obsidian",
+            "id": "540cfa0b-1b47-4493-9b44-b5bfa9a8020d",
+            "commandId": "workspace:close"
+          },
+          {
+            "name": "Remotely Save: 开始同步（start sync）",
+            "type": "Obsidian",
+            "id": "97fe0a57-6bac-49ca-bd7d-45c563a85efb",
+            "commandId": "remotely-save:start-sync"
+          },
+          {
+            "name": "Wait",
+            "type": "Wait",
+            "id": "b7260ae2-4432-4818-840f-df0c86d59a77",
+            "time": 20000
+          },
+          {
+            "name": "关闭",
+            "type": "Obsidian",
+            "id": "bb225719-14d2-4637-8846-2ce519c63bb4",
+            "commandId": "workspace:close-window"
+          }
+        ]
+      },
       "runOnStartup": false
     }
   ],
@@ -83,9 +79,12 @@
   "devMode": false,
   "templateFolderPath": "模板",
   "announceUpdates": true,
-  "version": "1.13.2",
+  "version": "2.4.0",
+  "globalVariables": {},
+  "onePageInputEnabled": false,
   "disableOnlineFeatures": true,
   "enableRibbonIcon": true,
+  "showCaptureNotification": true,
   "ai": {
     "defaultModel": "Ask me",
     "defaultSystemPrompt": "As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively. Format your responses using Markdown syntax. Please use the [[Obsidian]] link format. You can write aliases for the links by writing [[Obsidian|the alias after the pipe symbol]]. To use mathematical notation, use LaTeX syntax. LaTeX syntax for larger equations should be on separate lines, surrounded with double dollar signs ($$). You can also inline math expressions by wrapping it in $ symbols. For example, use $$w_{ij}^{\text{new}}:=w_{ij}^{\text{current}}+etacdotdelta_jcdot x_{ij}$$ on a separate line, but you can write \"($eta$ = learning rate, $delta_j$ = error term, $x_{ij}$ = input)\" inline.",
@@ -143,6 +142,8 @@
     "incrementFileNameSettingMoveToDefaultBehavior": true,
     "mutualExclusionInsertAfterAndWriteToBottomOfFile": true,
     "setVersionAfterUpdateModalRelease": true,
-    "addDefaultAIProviders": true
+    "addDefaultAIProviders": true,
+    "removeMacroIndirection": true,
+    "migrateFileOpeningSettings": true
   }
 }

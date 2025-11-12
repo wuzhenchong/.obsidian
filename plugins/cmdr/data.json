@@ -1,0 +1,68 @@
+{
+  "confirmDeletion": true,
+  "showAddCommand": false,
+  "debug": false,
+  "editorMenu": [],
+  "fileMenu": [],
+  "leftRibbon": [
+    {
+      "id": "obsidian-git:open-history-view",
+      "icon": "lucide-git-pull-request",
+      "name": "Git: Open history view",
+      "mode": "any"
+    }
+  ],
+  "rightRibbon": [],
+  "titleBar": [],
+  "statusBar": [],
+  "pageHeader": [
+    {
+      "id": "obsidian-git:backup-and-close",
+      "icon": "lucide-circle-arrow-up",
+      "name": "Git: Commit-and-sync and then close Obsidian",
+      "mode": "any",
+      "color": "#000000"
+    },
+    {
+      "id": "obsidian-git:push",
+      "icon": "lucide-arrow-left-right",
+      "name": "Git: Commit-and-sync",
+      "mode": "any"
+    },
+    {
+      "id": "templater-obsidian:insert-templater",
+      "icon": "templater-icon",
+      "name": "Templater: Open insert template modal",
+      "mode": "any"
+    },
+    {
+      "id": "obsidian-tasks-plugin:edit-task",
+      "icon": "lucide-check-square",
+      "name": "Tasks: Create or edit task",
+      "mode": "any"
+    },
+    {
+      "id": "workspace:toggle-pin",
+      "icon": "lucide-pin",
+      "name": "解锁/锁定",
+      "mode": "any"
+    }
+  ],
+  "macros": [],
+  "explorer": [],
+  "hide": {
+    "statusbar": [],
+    "leftRibbon": []
+  },
+  "spacing": "8",
+  "advancedToolbar": {
+    "rowHeight": 48,
+    "rowCount": 1,
+    "spacing": 0,
+    "buttonWidth": 48,
+    "columnLayout": false,
+    "mappedIcons": [],
+    "tooltips": false,
+    "heightOffset": 0
+  }
+}

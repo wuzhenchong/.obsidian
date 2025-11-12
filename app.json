@@ -3,8 +3,8 @@
   "strictLineBreaks": false,
   "showFrontmatter": true,
   "showLineNumber": false,
-  "newFileLocation": "folder",
-  "useMarkdownLinks": true,
+  "newFileLocation": "root",
+  "useMarkdownLinks": false,
   "attachmentFolderPath": "_attach",
   "alwaysUpdateLinks": true,
   "showUnsupportedFiles": false,
@@ -19,6 +19,7 @@
   "propertiesInDocument": "visible",
   "newLinkFormat": "shortest",
   "pdfExportSettings": {
+    "includeName": true,
     "pageSize": "Letter",
     "landscape": false,
     "margin": "0",

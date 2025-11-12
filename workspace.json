@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "330c0b068751d52e",
+        "id": "f96715d2b8cfe91d",
         "type": "tabs",
         "children": [
           {
-            "id": "21659e7ee181280d",
+            "id": "b8b5cc10683159f1",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1 日记/weekly/2025-W13.md",
+                "file": "3-科研idea/0-科研日志-2025.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -30,42 +30,16 @@
               },
               "pinned": true,
               "icon": "lucide-file",
-              "title": "2025-W13"
+              "title": "0-科研日志-2025"
             }
           },
           {
-            "id": "583181c511e3a3c1",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "3 文献阅读卡片/科研不懂的问题.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "pinned": true,
-              "icon": "lucide-file",
-              "title": "科研不懂的问题"
-            }
-          },
-          {
-            "id": "59c26c7314eb46c3",
+            "id": "a8ae6d0c4a625dc4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "0 obsidian学习如何记笔记/插件/插件-git.md",
+                "file": "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -80,11 +54,41 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "插件-git"
+              "title": "20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
+      },
+      {
+        "id": "633b3c08e4b32833",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f9699f61a170d4c6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》"
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -118,7 +122,7 @@
               "state": {
                 "query": "",
                 "matchingCase": false,
-                "explainSearch": false,
+                "explainSearch": true,
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
@@ -158,6 +162,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "3 科研工具/科研英语用词表达积累.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +172,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "科研英语用词表达积累 的反向链接列表"
             }
           },
           {
@@ -176,19 +181,20 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1 日记/weekly/2025-W13.md",
+                "file": "status-Doing.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "2025-W13 的出链列表"
+              "title": "status-Doing 的出链列表"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 305.5085258483887
+    "width": 299.5014228820801,
+    "collapsed": true
   },
   "right": {
     "id": "fdc48957d5d269ad",
@@ -197,7 +203,7 @@
       {
         "id": "758cd0d19dcf5bb2",
         "type": "tabs",
-        "dimension": 64.48087431693989,
+        "dimension": 65.13661202185793,
         "children": [
           {
             "id": "b7ff37f72596fc2f",
@@ -205,13 +211,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "0 obsidian学习如何记笔记/插件/插件-git.md",
+                "file": "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
                 "followCursor": true,
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "插件-git 的大纲"
+              "title": "20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》 的大纲"
             }
           },
           {
@@ -220,10 +226,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "3 文献阅读卡片/科研不懂的问题.md"
+                "file": "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md"
               },
               "icon": "lucide-info",
-              "title": "科研不懂的问题的笔记属性"
+              "title": "20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》的笔记属性"
             }
           },
           {
@@ -241,46 +247,31 @@
             }
           },
           {
-            "id": "ac478f20cdef8d91",
+            "id": "e8633b865e8d66e5",
             "type": "leaf",
             "state": {
-              "type": "git-view",
+              "type": "git-history-view",
               "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
+              "icon": "history",
+              "title": "History"
             }
           },
           {
-            "id": "258ef4870194cab2",
+            "id": "9851a70290ec994c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "status-Doing.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "status-Doing"
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "6bdea70e51901c13",
         "type": "tabs",
-        "dimension": 35.51912568306011,
+        "dimension": 34.86338797814208,
         "children": [
           {
             "id": "5f23b09179a558a6",
@@ -298,7 +289,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "科研导航.md",
+                "file": "homepage/导航-科研.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": true,
@@ -313,7 +304,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "科研导航"
+              "title": "导航-科研"
             }
           },
           {
@@ -322,7 +313,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "3 文献阅读卡片/科研不懂的问题.md",
+                "file": "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
                 "options": {
                   "collapse-filter": false,
                   "search": "",
@@ -330,8 +321,8 @@
                   "localBacklinks": true,
                   "localForelinks": true,
                   "localInterlinks": true,
-                  "showTags": false,
-                  "showAttachments": true,
+                  "showTags": true,
+                  "showAttachments": false,
                   "hideUnresolved": false,
                   "collapse-color-groups": true,
                   "colorGroups": [],
@@ -350,20 +341,22 @@
                 }
               },
               "icon": "lucide-git-fork",
-              "title": "科研不懂的问题 的关系图"
+              "title": "20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》 的关系图"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 328.5
+    "width": 331.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:创建新数据库": false,
       "command-palette:打开命令面板": false,
       "obsidian-kanban:创建新看板": false,
-      "dbfolder:创建一个新数据库表": false,
       "switcher:打开快速切换": true,
       "workspaces:管理工作区布局": false,
       "canvas:新建白板": false,
@@ -371,68 +364,70 @@
       "templates:插入模板": true,
       "graph:查看关系图谱": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "templater-obsidian:Templater": false,
+      "templater-obsidian:Templater": true,
       "quickadd:QuickAdd": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": true,
+      "cmdr:Git: Open history view": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "59c26c7314eb46c3",
+  "active": "f9699f61a170d4c6",
   "lastOpenFiles": [
-    "status-Doing.md",
-    "4 写论文/项目-杭州局重构英文论文.md",
-    "1 日记/weekly/2025-W13.md",
-    "3 文献阅读卡片/科研不懂的问题.md",
-    "1 日记/weekly/2025-W14.md",
-    "1 日记/weekly/2025-W12.md",
-    "1 日记/yearly/2025年.md",
-    "模板/在用/周记模板.md",
-    "Pluginfiles/MarpTheme/gradient.css",
-    "Pluginfiles/MarpTheme/border.css",
-    "Pluginfiles/TaskForCalendar/(Every R,W,T,M) 11.md",
-    "Pluginfiles/MarpTheme/rose-pine-dawn.css",
-    "Pluginfiles/MarpTheme/beamer.css",
-    "Pluginfiles/TaskForCalendar",
-    "Pluginfiles/MarpTheme",
-    "Pluginfiles",
-    "Plugin_files/TaskForCalendar/(Every R,W,T,M) 11.md",
-    "Plugin_files/MarpTheme/gradient.css",
-    "Plugin_files/MarpTheme/rose-pine-dawn.css",
-    "Plugin_files/MarpTheme/border.css",
-    "Others/TaskForCalendar/(Every R,W,T,M) 11.md",
-    "Temps/未命名.md",
-    "模板/在用/1-TodayNotes.md",
-    "模板/在用/1-TomorrowNotes.md",
-    "1 日记/weekly/2025-W15.md",
-    "1 日记/weekly/2025-W10.md",
-    "0 obsidian学习如何记笔记/插件/插件-git.md",
-    "3 科研idea/科研idea/4 配微协同（上下层互动）.md",
-    "科研导航.md",
-    "3 文献阅读卡片/方法库/distflow和二阶锥凸松弛.md",
-    "0 obsidian学习如何记笔记/OB的鼓捣日记.md",
-    "8 生活-杂文/杂文/【汇总】政治思想航向.md",
-    "8 生活-杂文/杂文/【汇总】油管漫谈.md",
-    "3 科研idea/输配协同.md",
-    "3 科研idea/电力通信建模分析.md",
-    "3 科研idea/蜂窝状微电网的协调控制问题.md",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-git-250329150805.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-git-250329150928.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-git-250329145806.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-git-250329142602.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-git-250329142136.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-git-250329142116.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-TasksCalendarWrapper-241204225826.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-TasksCalendarWrapper-241204225810.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-TasksCalendarWrapper-241204225611.png",
-    "_attach/0-obsidian学习如何记笔记/插件/插件-CustomAttachmentlocation-set2.png",
+    "3-科研idea/0-科研idea整理.md",
+    "3-科研工具/zotero使用/自定义文献导出格式.md",
+    "3-科研工具/zotero使用/Zotero&obsidian文献阅读和记笔记.md",
+    "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
+    "3-科研idea/0-科研日志-2025.md",
+    "3-科研工具/zotero使用/Zotero使用指南.md",
+    "3-科研工具/zotero使用/Better BibTex for Zotero.md",
+    "3-文献笔记/【综述】配电网与分布式电源优化和控制.md",
+    "%电网建模/【文献】STF方法.md",
+    "_attach/3-科研工具/zotero使用/Better-BibTex-for-Zotero-251112144229.png",
+    "_templater/meta/ZoteroResearchNote.md",
+    "3-科研工具/zotero使用/Better Notes for Zotero.md",
+    "obsidian学习/解决方案/卡片笔记法.md",
+    "_attach/obsidian学习/解决方案/《卡片笔记法》-251112132731.png",
+    "_attach/obsidian学习/解决方案",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-f8ee5d36068a42b51d0e4a1116cfcec1.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-f6032fc06eb20480f096199713f70885.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-f2b54d4e7be0eaefe1c2c56836fa5368.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-f5d079153c99a25b9be5b8583c4cc8a7.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-ee8bae97908d5147b423f77ad0d3c1bb.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-ec181b795ac1fb5a50d700b6e996d745.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-f56414bf9bced67990def8660e306759.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-f0f13b5c60e0af5553bd359f5513be1b.woff2",
+    "Excalidraw/CJK Fonts/Xiaolai-Regular-cbaaefaaf326668277aa24dfa93c4d28.woff2",
+    "obsidian学习/flomo和卡片的标签.md",
+    "未命名.md",
+    "ZoteroNote/PuTianJiaoJiYuYiZhiXingSuanFaDeZhuDongPeiDianWangFenBuShiYouHuaDiaoDu2017.md",
+    "未命名-1.md",
+    "3-科研idea/0-科研想法 log.md",
+    "Zotero同步/综述卡---台区内分布式光伏如何调节？-FB4KNN63.md",
+    "Zotero同步/_Zotero同步文件夹说明.md",
+    "Zotero同步/问题-台区内分布式光伏如何调节？【已解决】.md",
+    "%电网建模/【idea】STF和图计算的结合.md",
+    "homepage/status-Doing.md",
+    "3-文献笔记/概念辨析/虚拟电厂和微电网概念.md",
+    "3-文献笔记/术语库/【概念】电能路由器.md",
+    "3-文献笔记/电力行业相关政策.md",
+    "3-文献笔记/【综述】配微协同优化（上下层互动）.md",
+    "_attach/3-科研idea/电力计算/Pasted image 20240707114544.png",
+    "_attach/3-科研idea/电力计算/matpower层级示意图.png",
+    "_attach/background/matpower.png",
+    "_attach/3-科研工具/zotero使用/zotero&obsidian文献阅读和总结-251111142032.png",
+    "_attach/3-科研工具/zotero使用/zotero和obsidian读论文和总结-251111124547.png",
+    "%电网建模/STF的论文构想.canvas",
+    "_attach/@数学方法库/不动点迭代及其加速方法-251011230511.png",
+    "_attach/@数学方法库/不动点迭代的加速方法-250916140815.png",
+    "_attach/@数学方法库/不动点迭代的加速方法-250916140000.png",
+    "7-生活笔记/我的生活应当是什么样的？/what is my life.canvas",
+    "5-实验室项目/aoes/电压监测.canvas",
+    "5-实验室项目/aoes/demo-aoe.canvas",
     "导航.canvas",
-    "未命名.canvas",
     "8 生活-杂文/我的生活应当是什么样的？/what is my life.canvas",
     "matpower网络模型.canvas",
     "8 生活-杂/我的生活应当是什么样的？/what is my life.canvas",
     "Excalidraw/未命名.canvas",
-    "未命名 1.canvas",
-    "5 项目管理/aoes/电压监测.canvas",
-    "5 项目管理/aoes/demo-aoe.canvas",
-    "8 生活-杂/what is my life.canvas"
+    "未命名 1.canvas"
   ]
 }

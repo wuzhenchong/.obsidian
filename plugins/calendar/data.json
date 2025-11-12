@@ -4,7 +4,7 @@
   "wordsPerDot": 250,
   "showWeeklyNote": true,
   "weeklyNoteFormat": "",
-  "weeklyNoteTemplate": "模板/在用/周记模板",
-  "weeklyNoteFolder": "1 日记/weekly",
+  "weeklyNoteTemplate": "_templater/using/周记模板",
+  "weeklyNoteFolder": "1-日记/weekly",
   "localeOverride": "system-default"
 }

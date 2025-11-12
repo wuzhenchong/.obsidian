@@ -7,8 +7,22 @@
       "key": "P"
     }
   ],
-  "editor:set-heading-1": [],
-  "editor:set-heading-2": [],
+  "editor:set-heading-1": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "1"
+    }
+  ],
+  "editor:set-heading-2": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "2"
+    }
+  ],
   "obsidian-emoji-toolbar:emoji-picker:open-picker": [
     {
       "modifiers": [
@@ -17,7 +31,6 @@
       "key": "E"
     }
   ],
-  "editor:save-file": [],
   "file-explorer:new-file-in-new-pane": [],
   "workspace:new-tab": [],
   "editor:toggle-checklist-status": [],
@@ -89,20 +102,12 @@
         "Alt"
       ],
       "key": "D"
-    }
-  ],
-  "obsidian-git:backup-and-close": [
+    },
     {
       "modifiers": [
         "Mod"
       ],
-      "key": "S"
-    },
-    {
-      "modifiers": [
-        "Alt"
-      ],
-      "key": "S"
+      "key": "D"
     }
   ],
   "quickadd:runQuickAdd": [
@@ -120,5 +125,62 @@
       ],
       "key": "PageUp"
     }
-  ]
+  ],
+  "workspace:goto-tab-1": [],
+  "workspace:goto-tab-2": [],
+  "workspace:goto-tab-3": [],
+  "workspace:goto-tab-4": [],
+  "workspace:goto-tab-5": [],
+  "workspace:goto-tab-6": [],
+  "workspace:goto-tab-7": [],
+  "workspace:goto-tab-8": [],
+  "editor:set-heading-3": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "3"
+    }
+  ],
+  "editor:set-heading-4": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "4"
+    }
+  ],
+  "editor:set-heading-5": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "5"
+    }
+  ],
+  "editor:set-heading-6": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "6"
+    }
+  ],
+  "obsidian-git:backup-and-close": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "Q"
+    }
+  ],
+  "obsidian-git:push": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "S"
+    }
+  ],
+  "editor:save-file": []
 }

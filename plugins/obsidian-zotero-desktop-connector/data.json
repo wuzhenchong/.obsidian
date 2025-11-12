@@ -1,0 +1,28 @@
+{
+  "database": "Zotero",
+  "noteImportFolder": "ZoteroNote",
+  "pdfExportImageDPI": 120,
+  "pdfExportImageFormat": "jpg",
+  "pdfExportImageQuality": 90,
+  "citeFormats": [
+    {
+      "name": "Format #1",
+      "format": "biblatex",
+      "cslStyle": "chicago-fullnote-bibliography",
+      "command": "autocite"
+    }
+  ],
+  "exportFormats": [
+    {
+      "name": "Create research note",
+      "outputPathTemplate": "ZoteroNote/{{citekey}}.md",
+      "imageOutputPathTemplate": "_attach/ZoteroNote/{{citekey}}/",
+      "imageBaseNameTemplate": "image",
+      "cslStyle": "chicago-fullnote-bibliography",
+      "templatePath": "_templater/meta/ZoteroResearchNote.md"
+    }
+  ],
+  "citeSuggestTemplate": "[[{{citekey}}]]",
+  "openNoteAfterImport": true,
+  "whichNotesToOpenAfterImport": "first-imported-note"
+}

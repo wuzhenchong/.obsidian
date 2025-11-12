@@ -104,7 +104,7 @@
   "Components@@outline-enhanced": false,
   "Components@@CTA-BTN-enable": false,
   "Components@@file-names-untrim": false,
-  "Components@@folder-font-bold": false,
+  "Components@@folder-font-bold": true,
   "Components@@immersive-canvas": false,
   "Components@@setting-item-title-icon-remove": false,
   "Components@@scrollbar-hide": false,
@@ -121,5 +121,6 @@
   "Editor@@text-align-justify": true,
   "Editor@@h2-size": "1.5em",
   "Editor@@h1-size": "1.75em",
-  "Editor@@h2-divider-on": true
+  "Editor@@h2-divider-on": true,
+  "Components@@colorful-folder": true
 }

@@ -1,13 +1,17 @@
 {
   "commitMessage": "{{hostname}}: {{date}}",
+  "autoCommitMessage": "auto | {{hostname}}: {{date}}",
+  "commitMessageScript": "",
   "commitDateFormat": "YYYY-MM-DD HH:mm:ss",
   "autoSaveInterval": 0,
   "autoPushInterval": 0,
   "autoPullInterval": 0,
   "autoPullOnBoot": false,
+  "autoCommitOnlyStaged": false,
   "disablePush": false,
   "pullBeforePush": true,
   "disablePopups": false,
+  "showErrorNotices": true,
   "disablePopupsForNoChanges": false,
   "listChangedFilesInMessageBody": false,
   "showStatusBar": false,
@@ -15,7 +19,7 @@
   "syncMethod": "rebase",
   "customMessageOnAutoBackup": false,
   "autoBackupAfterFileChange": false,
-  "treeStructure": true,
+  "treeStructure": false,
   "refreshSourceControl": false,
   "basePath": "",
   "differentIntervalCommitAndPush": false,
@@ -54,6 +58,5 @@
     "gutterSpacingFallbackLength": 12,
     "lastShownAuthorDisplay": "initials",
     "lastShownDateTimeFormatOptions": "date"
-  },
-  "autoCommitMessage": "auto | {{hostname}}: {{date}}"
+  }
 }

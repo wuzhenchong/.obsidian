@@ -9,7 +9,7 @@
   "translucency": false,
   "enabledCssSnippets": [],
   "showViewHeader": true,
-  "baseFontSizeAction": true,
+  "baseFontSizeAction": false,
   "showRibbon": true,
   "textFontFamily": "仓耳今楷01"
 }
