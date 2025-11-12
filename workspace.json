@@ -193,8 +193,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 299.5014228820801,
-    "collapsed": true
+    "width": 299.5014228820801
   },
   "right": {
     "id": "fdc48957d5d269ad",
@@ -266,7 +265,8 @@
               "title": "Advanced Tables"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       },
       {
         "id": "6bdea70e51901c13",
