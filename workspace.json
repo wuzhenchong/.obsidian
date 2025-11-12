@@ -251,8 +251,8 @@
             "state": {
               "type": "git-history-view",
               "state": {},
-              "icon": "history",
-              "title": "History"
+              "icon": "lucide-ghost",
+              "title": "git-history-view"
             }
           },
           {
@@ -368,7 +368,8 @@
       "quickadd:QuickAdd": false,
       "obsidian-git:Open Git source control": true,
       "cmdr:Git: Open history view": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "remotely-save:Remotely Save": false
     }
   },
   "active": "f9699f61a170d4c6",
