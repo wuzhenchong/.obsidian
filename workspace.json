@@ -61,11 +61,11 @@
         "currentTab": 1
       },
       {
-        "id": "633b3c08e4b32833",
+        "id": "f1022c751e4d4460",
         "type": "tabs",
         "children": [
           {
-            "id": "f9699f61a170d4c6",
+            "id": "f7a3925f0fad4745",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -108,7 +108,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": true
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -251,8 +251,8 @@
             "state": {
               "type": "git-history-view",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "git-history-view"
+              "icon": "history",
+              "title": "History"
             }
           },
           {
@@ -263,6 +263,18 @@
               "state": {},
               "icon": "spreadsheet",
               "title": "Advanced Tables"
+            }
+          },
+          {
+            "id": "4b3f5cb2aa5f078d",
+            "type": "leaf",
+            "state": {
+              "type": "footnotes",
+              "state": {
+                "file": "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md"
+              },
+              "icon": "lucide-file-signature",
+              "title": "脚注"
             }
           }
         ],
@@ -372,13 +384,29 @@
       "remotely-save:Remotely Save": false
     }
   },
-  "active": "f9699f61a170d4c6",
+  "active": "e7bd9c9ba8d92b45",
   "lastOpenFiles": [
+    "未命名.base",
+    "未命名-1.md",
+    "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
+    "3-科研idea/0-科研日志-2025.md",
+    "未命名 -1.base",
+    "obsidian学习/OB的教程记录.md",
+    "obsidian学习/插件/插件-Github Copilot.md",
+    "_attach/obsidian学习/插件/插件-Github-Copilot-251112224218.png",
+    "obsidian学习/插件/插件-commander.md",
+    "obsidian学习/插件/插件-git.md",
+    "obsidian学习/插件/插件-Easy Typing.md",
+    "obsidian学习/插件/插件-Excalidraw.md",
+    "obsidian学习/插件/插件-dataview.md",
+    "obsidian学习/插件/插件-CustomAttachmentlocation.md",
+    "obsidian学习/插件/插件-Annotator.md",
+    "obsidian学习/插件/插件-MetaBind.md",
+    "obsidian学习/myObsidian设计构思.md",
+    "obsidian学习/OB的鼓捣日记.md",
     "3-科研idea/0-科研idea整理.md",
     "3-科研工具/zotero使用/自定义文献导出格式.md",
     "3-科研工具/zotero使用/Zotero&obsidian文献阅读和记笔记.md",
-    "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
-    "3-科研idea/0-科研日志-2025.md",
     "3-科研工具/zotero使用/Zotero使用指南.md",
     "3-科研工具/zotero使用/Better BibTex for Zotero.md",
     "3-文献笔记/【综述】配电网与分布式电源优化和控制.md",
@@ -396,22 +424,6 @@
     "Excalidraw/CJK Fonts/Xiaolai-Regular-ee8bae97908d5147b423f77ad0d3c1bb.woff2",
     "Excalidraw/CJK Fonts/Xiaolai-Regular-ec181b795ac1fb5a50d700b6e996d745.woff2",
     "Excalidraw/CJK Fonts/Xiaolai-Regular-f56414bf9bced67990def8660e306759.woff2",
-    "Excalidraw/CJK Fonts/Xiaolai-Regular-f0f13b5c60e0af5553bd359f5513be1b.woff2",
-    "Excalidraw/CJK Fonts/Xiaolai-Regular-cbaaefaaf326668277aa24dfa93c4d28.woff2",
-    "obsidian学习/flomo和卡片的标签.md",
-    "未命名.md",
-    "ZoteroNote/PuTianJiaoJiYuYiZhiXingSuanFaDeZhuDongPeiDianWangFenBuShiYouHuaDiaoDu2017.md",
-    "未命名-1.md",
-    "3-科研idea/0-科研想法 log.md",
-    "Zotero同步/综述卡---台区内分布式光伏如何调节？-FB4KNN63.md",
-    "Zotero同步/_Zotero同步文件夹说明.md",
-    "Zotero同步/问题-台区内分布式光伏如何调节？【已解决】.md",
-    "%电网建模/【idea】STF和图计算的结合.md",
-    "homepage/status-Doing.md",
-    "3-文献笔记/概念辨析/虚拟电厂和微电网概念.md",
-    "3-文献笔记/术语库/【概念】电能路由器.md",
-    "3-文献笔记/电力行业相关政策.md",
-    "3-文献笔记/【综述】配微协同优化（上下层互动）.md",
     "_attach/3-科研idea/电力计算/Pasted image 20240707114544.png",
     "_attach/3-科研idea/电力计算/matpower层级示意图.png",
     "_attach/background/matpower.png",
@@ -420,7 +432,6 @@
     "%电网建模/STF的论文构想.canvas",
     "_attach/@数学方法库/不动点迭代及其加速方法-251011230511.png",
     "_attach/@数学方法库/不动点迭代的加速方法-250916140815.png",
-    "_attach/@数学方法库/不动点迭代的加速方法-250916140000.png",
     "7-生活笔记/我的生活应当是什么样的？/what is my life.canvas",
     "5-实验室项目/aoes/电压监测.canvas",
     "5-实验室项目/aoes/demo-aoe.canvas",
