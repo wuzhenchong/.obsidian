@@ -6,7 +6,7 @@
     {
       "id": "editing-toolbar:editor-undo",
       "name": "Undo editor",
-      "icon": "undo-glyph"
+      "icon": "undo-2"
     },
     {
       "id": "editing-toolbar:editor-redo",
@@ -120,12 +120,12 @@
     {
       "id": "editing-toolbar:insert-link",
       "name": "Insert link []()",
-      "icon": "link-glyph"
+      "icon": "external-link"
     },
     {
       "id": "SubmenuCommands-mdwxp9yf3",
       "name": "submenu",
-      "icon": "external-link",
+      "icon": "link",
       "SubmenuCommands": [
         {
           "id": "editing-toolbar:editor:attach-file",
@@ -147,17 +147,17 @@
     {
       "id": "SubmenuCommands-luc8efull",
       "name": "submenu",
-      "icon": "message-square",
+      "icon": "list-plus",
       "SubmenuCommands": [
         {
           "id": "obsidian-admonition:insert-admonition",
           "name": "Admonition: Insert Admonition",
-          "icon": "blocks"
+          "icon": "quote"
         },
         {
           "id": "editing-toolbar:insert-callout",
           "name": "Insert Callout ",
-          "icon": "lucide-quote"
+          "icon": "right-arrow"
         }
       ]
     },

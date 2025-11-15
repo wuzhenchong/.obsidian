@@ -34,14 +34,6 @@
   "file-explorer:new-file-in-new-pane": [],
   "workspace:new-tab": [],
   "editor:toggle-checklist-status": [],
-  "editor:cycle-list-checklist": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "L"
-    }
-  ],
   "workspace:next-tab": [
     {
       "modifiers": [
@@ -182,5 +174,43 @@
       "key": "S"
     }
   ],
-  "editor:save-file": []
+  "editor:open-link-in-new-leaf": [],
+  "editing-toolbar:insert-link": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "K"
+    }
+  ],
+  "easy-typing-obsidian:easy-typing-format-selection": [],
+  "editor:save-file": [],
+  "editor:insert-link": [],
+  "obsidian-file-path-to-uri:toggle-file-path-to-uri": [],
+  "markdown:add-metadata-property": [],
+  "editing-toolbar:editor:cycle-list-checklist": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "L"
+    }
+  ],
+  "editing-toolbar:toggle-bullet-list": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "L"
+    }
+  ],
+  "editing-toolbar:toggle-numbered-list": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": ";"
+    }
+  ]
 }

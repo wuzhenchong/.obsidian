@@ -48,7 +48,19 @@
       "mode": "any"
     }
   ],
-  "macros": [],
+  "macros": [
+    {
+      "macro": [
+        {
+          "action": 0,
+          "commandId": "obsidian-git:push"
+        }
+      ],
+      "name": "启动后 git sync",
+      "icon": "star",
+      "startup": true
+    }
+  ],
   "explorer": [],
   "hide": {
     "statusbar": [],
