@@ -32,8 +32,81 @@
               "icon": "lucide-file",
               "title": "0-科研日志-2025"
             }
+          },
+          {
+            "id": "73868f834d1a037d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "7-生活笔记/电脑信息/实验室笔记本ThinkBook配置.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "实验室笔记本ThinkBook配置"
+            }
+          },
+          {
+            "id": "bcb83c06ace18b11",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "3-科研工具/zotero使用/Zotero使用指南.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Zotero使用指南"
+            }
+          },
+          {
+            "id": "be5ce49a520d61c1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "obsidian学习/OB的教程记录.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "OB的教程记录"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -53,7 +126,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": true
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -65,7 +138,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#TODO -#TODO/",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": true,
                 "collapseAll": true,
@@ -155,13 +228,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "3-科研idea/0-科研日志-2025.md",
+                "file": "obsidian学习/OB的教程记录.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "0-科研日志-2025 的大纲"
+              "title": "OB的教程记录 的大纲"
             }
           },
           {
@@ -247,7 +320,7 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "3-科研idea/0-科研日志-2025.md",
+                "file": "obsidian学习/OB的教程记录.md",
                 "options": {
                   "collapse-filter": true,
                   "search": "",
@@ -270,15 +343,16 @@
                   "repelStrength": 10,
                   "linkStrength": 1,
                   "linkDistance": 250,
-                  "scale": 1,
+                  "scale": 0.5087618930311104,
                   "close": true
                 }
               },
               "icon": "lucide-git-fork",
-              "title": "0-科研日志-2025 的关系图"
+              "title": "OB的教程记录 的关系图"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -300,58 +374,59 @@
       "quickadd:QuickAdd": false,
       "obsidian-git:Open Git source control": true,
       "cmdr:Git: Open history view": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "file-cleaner-redux:Clean files": false
     }
   },
-  "active": "e7bd9c9ba8d92b45",
+  "active": "be5ce49a520d61c1",
   "lastOpenFiles": [
-    "3-科研工具/AI使用/Claude辅助写代码.md",
-    "3-科研idea/0-科研日志-2025.md",
-    "3-科研工具/科研方法论/期刊汇总.md",
-    "3-科研工具/科研方法论/如何读论文和了解前沿？.md",
-    "3-科研工具/科研方法论/论文引用格式.md",
-    "3-科研工具/科研方法论/科研绘图.md",
-    "3-科研工具/科研方法论/科研工具.md",
-    "3-科研工具/科研方法论/科研技巧.md",
-    "7-生活笔记/我的生活应当是什么样的？/学习新知识.md",
-    "7-生活笔记/我的生活应当是什么样的？/锻炼篇.md",
-    "A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》.md",
-    "_attach/!隐私不放在git/用户信息账号密码.md",
-    "3-科研工具/zotero使用/Zotero&obsidian联动和文献阅读笔记.md",
+    "obsidian学习/插件/插件-MetaBind-按钮.md",
     "obsidian学习/OB的教程记录.md",
-    "obsidian学习/插件/插件-Editing Toolbar 必装的可视化编辑工具.md",
-    "obsidian学习/解决方案/图标icon资源.md",
-    "2-学习/Rust/Rust杂记.md",
-    "obsidian学习/插件/插件-Easy Typing.md",
-    "obsidian学习/插件/插件-Excalidraw.md",
-    "_attach/3-科研idea/你好.pdf",
-    "3-科研工具/Latex 使用.md",
-    "3-科研工具/AI使用/云雾API.md",
-    "obsidian学习/插件/插件-git.md",
-    "3-科研工具/AI使用",
-    "3-科研工具/zotero使用/zutilo 插件.md",
+    "obsidian学习/解决方案/笔记方法论.md",
+    "obsidian学习/鼓捣/Ob 任务看板.md",
+    "obsidian学习/插件/插件-dataview-统计视图.md",
+    "obsidian学习/插件/插件-Admonition-文字色块callouts.md",
+    "Base-文献笔记.base",
+    "3-科研工具/科研术语中英文及缩写.md",
+    "3-科研工具/英文论文写作方法和句式.md",
+    "7-生活笔记/电脑信息/实验室笔记本ThinkBook配置.md",
     "3-科研工具/zotero使用/Zotero使用指南.md",
-    "3-科研工具/zotero使用/Better Notes for Zotero.md",
-    "3-科研工具/zotero使用/Better BibTex for Zotero.md",
-    "_attach/obsidian学习/插件/插件-commander-20251113122420.png",
-    "未命名.base",
-    "未命名 -1.base",
-    "_attach/obsidian学习/插件/插件-Github-Copilot-251112224218.png",
-    "_attach/3-科研工具/zotero使用/Better-BibTex-for-Zotero-251112144229.png",
-    "_attach/obsidian学习/解决方案/《卡片笔记法》-251112132731.png",
-    "_attach/obsidian学习/解决方案",
-    "Excalidraw/CJK Fonts/Xiaolai-Regular-f8ee5d36068a42b51d0e4a1116cfcec1.woff2",
-    "Excalidraw/CJK Fonts/Xiaolai-Regular-f6032fc06eb20480f096199713f70885.woff2",
-    "Excalidraw/CJK Fonts/Xiaolai-Regular-f2b54d4e7be0eaefe1c2c56836fa5368.woff2",
-    "Excalidraw/CJK Fonts/Xiaolai-Regular-f5d079153c99a25b9be5b8583c4cc8a7.woff2",
-    "Excalidraw/CJK Fonts/Xiaolai-Regular-ee8bae97908d5147b423f77ad0d3c1bb.woff2",
-    "_attach/3-科研idea/电力计算/Pasted image 20240707114544.png",
-    "_attach/3-科研idea/电力计算/matpower层级示意图.png",
-    "_attach/background/matpower.png",
-    "_attach/3-科研工具/zotero使用/zotero&obsidian文献阅读和总结-251111142032.png",
-    "_attach/3-科研工具/zotero使用/zotero和obsidian读论文和总结-251111124547.png",
+    "7-生活笔记/电脑信息/实验室电脑.md",
+    "7-生活笔记/电脑信息/大厦电脑备份.md",
+    "7-生活笔记/电脑与软件使用/电脑系统.md",
+    "7-生活笔记/电脑与软件使用/重装windows系统.md",
+    "7-生活笔记/电脑与软件使用/实用技巧.md",
+    "3-科研idea/0-科研日志-2025.md",
+    "obsidian学习/插件/插件-commander.md",
+    "obsidian学习/插件/插件-Commander-自定义命令.md",
+    "obsidian学习/插件/插件-EasyTyping-自动执行打字规则.md",
+    "homepage/导航-科研.md",
+    "_attach/!隐私不放在git/用户信息账号密码.md",
+    "obsidian学习/OB的鼓捣日记.md",
+    "2-学习/ComputerScience/git学习.md",
+    "3-科研idea/0-科研idea整理.md",
+    "3-科研idea/0-科研想法 log.md",
+    "20251119-LLM和潮流计算的结合.md",
+    "_attach/A-随记/20251119-和邱剑沟通LLM和潮流计算的结合-251121.jpg",
+    "_attach/A-随记/20251104-准备党课《让绿电点亮未来：以青年担当赋能新型能源体系》-2511172302.png",
+    "_attach/解决方案/多端同步解决方案3.png",
+    "_attach/解决方案/多端同步解决方案4.png",
+    "_attach/解决方案/多端同步解决方案2.png",
+    "_attach/解决方案/多端同步解决方案1.png",
+    "_attach/A-随记/20251119-和邱剑沟通LLM和潮流计算的结合-251121.png",
+    "_attach/A-随记/9bf0a82367f4b303182a8fb6fa6982f9 -1.jpg",
+    "_attach/A-随记/9bf0a82367f4b303182a8fb6fa6982f9.jpg",
+    "_attach/A-随记/24c973e0170802fa9ec77a371f1b0b2b -1.jpg",
+    "Note",
+    "_templater/demo",
+    "Base-政治与时事.base",
+    "9-政治与时事/时政卡片箱",
+    "_attach/A-随记",
+    "9-政治与时事/政治与时事.base",
+    "9-政治与时事/时事卡片",
+    "_attach/3-科研idea/你好.pdf",
+    "3-科研工具/AI使用",
     "%电网建模/STF的论文构想.canvas",
-    "_attach/@数学方法库/不动点迭代及其加速方法-251011230511.png",
     "7-生活笔记/我的生活应当是什么样的？/what is my life.canvas",
     "5-实验室项目/aoes/电压监测.canvas",
     "5-实验室项目/aoes/demo-aoe.canvas",

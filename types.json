@@ -6,7 +6,7 @@
     "status": "text",
     "priority": "number",
     "打分": "number",
-    "研究方向": "multitext",
+    "研究方向": "number",
     "excalidraw-plugin": "text",
     "excalidraw-export-transparent": "checkbox",
     "excalidraw-mask": "checkbox",

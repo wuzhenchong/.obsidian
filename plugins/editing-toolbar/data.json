@@ -147,12 +147,12 @@
     {
       "id": "SubmenuCommands-luc8efull",
       "name": "submenu",
-      "icon": "list-plus",
+      "icon": "add-note-glyph",
       "SubmenuCommands": [
         {
           "id": "obsidian-admonition:insert-admonition",
           "name": "Admonition: Insert Admonition",
-          "icon": "quote"
+          "icon": "message-square"
         },
         {
           "id": "editing-toolbar:insert-callout",
