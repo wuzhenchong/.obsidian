@@ -19,5 +19,10 @@
   "deleteEmptyMarkdownFilesWithBacklinks": false,
   "fileAgeThreshold": 0,
   "closeNewTabs": false,
-  "deleteEmptyFileOnClose": false
+  "deleteEmptyFileOnClose": false,
+  "ExternalPlugins": {
+    "Excalidraw": {
+      "TreatAsAttachments": false
+    }
+  }
 }
