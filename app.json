@@ -15,7 +15,7 @@
   "defaultViewMode": "source",
   "spellcheck": false,
   "spellcheckLanguages": null,
-  "focusNewTab": false,
+  "focusNewTab": true,
   "propertiesInDocument": "visible",
   "newLinkFormat": "shortest",
   "pdfExportSettings": {

@@ -1,10 +1,8 @@
 {
   "pinned": [
     "insert-current-date",
-    "templater-obsidian:insert-templater",
+    "quickadd:choice:d6d01acc-b0da-4353-b912-d10f6fc466d4",
     "obsidian-tasks-plugin:edit-task",
-    "quickadd:runQuickAdd",
-    "obsidian-git:push",
-    "obsidian-git:pull"
+    "templater-obsidian:insert-templater"
   ]
 }

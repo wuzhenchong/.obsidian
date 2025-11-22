@@ -1,5 +1,36 @@
 {
-  "choices": [],
+  "choices": [
+    {
+      "id": "d6d01acc-b0da-4353-b912-d10f6fc466d4",
+      "name": "随笔记录",
+      "type": "Template",
+      "command": true,
+      "templatePath": "_templater/using/随记模板（QuickAdd）.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{DATE:YYYYMMDD}}-{{NAME}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "A-随记"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFile": true,
+      "fileOpening": {
+        "location": "tab",
+        "direction": "vertical",
+        "mode": "default",
+        "focus": true
+      },
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    }
+  ],
   "inputPrompt": "single-line",
   "devMode": false,
   "templateFolderPath": "_templater/using",
