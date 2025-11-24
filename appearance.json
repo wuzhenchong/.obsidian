@@ -2,14 +2,14 @@
   "accentColor": "",
   "cssTheme": "Border",
   "theme": "moonstone",
-  "interfaceFontFamily": "",
+  "interfaceFontFamily": "仓耳今楷01,霞鹜文楷 GB 屏幕阅读版",
   "baseFontSize": 16,
-  "monospaceFontFamily": "Consolas",
+  "monospaceFontFamily": "",
   "nativeMenus": false,
   "translucency": false,
   "enabledCssSnippets": [],
   "showViewHeader": true,
   "baseFontSizeAction": false,
   "showRibbon": true,
-  "textFontFamily": "仓耳今楷01"
+  "textFontFamily": "霞鹜文楷 GB 屏幕阅读版,仓耳今楷01"
 }
