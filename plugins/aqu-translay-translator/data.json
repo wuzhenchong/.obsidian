@@ -1,0 +1,76 @@
+{
+  "apiType": "openai",
+  "apiUrl": "https://yunwu.ai/v1/chat/completions",
+  "apiKey": "sk-PHxtMEgBJqblfEmWVlhSRdhwiBejXMffG5vauaRrSz04aU2G",
+  "model": "gpt-4o-mini",
+  "fromLang": "auto",
+  "toLang": "zh",
+  "systemPrompt": "You are a translation engine. Preserve meaning, formatting, punctuation, and code blocks. Do not add explanations.",
+  "userPrompt": "Translate the following text from {from} to {to}. Reply with translation only.\n\n{text}",
+  "skipSelectors": [
+    "body > div.modal-container.mod-dim > div.modal.mod-settings.mod-sidebar-layout > div.modal-content.vertical-tabs-container > div.vertical-tab-header",
+    "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-content > div.markdown-reading-view > div",
+    "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-content > div.markdown-source-view.cm-s-obsidian.mod-cm6.node-insert-event.is-readable-line-width.is-live-preview.is-folding.show-properties > div > div.cm-scroller",
+    "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-header-container",
+    "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-content > div.markdown-source-view.cm-s-obsidian.mod-cm6.node-insert-event.is-readable-line-width.is-live-preview.is-folding.show-properties > div > div.cm-scroller > div.cm-sizer > div.inline-title",
+    "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-header > div.view-header-title-container.mod-at-start.mod-fade.mod-at-end"
+  ],
+  "skipPresets": [
+    {
+      "enabled": true,
+      "name": "设置侧边栏",
+      "selectors": [
+        "body > div.modal-container.mod-dim > div.modal.mod-settings.mod-sidebar-layout > div.modal-content.vertical-tabs-container > div.vertical-tab-header"
+      ]
+    },
+    {
+      "enabled": true,
+      "name": "编辑器",
+      "selectors": [
+        "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-content > div.markdown-reading-view > div",
+        "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-content > div.markdown-source-view.cm-s-obsidian.mod-cm6.node-insert-event.is-readable-line-width.is-live-preview.is-folding.show-properties > div > div.cm-scroller"
+      ]
+    },
+    {
+      "enabled": true,
+      "name": "标签栏",
+      "selectors": [
+        "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-header-container"
+      ]
+    },
+    {
+      "enabled": true,
+      "name": "笔记标题",
+      "selectors": [
+        "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-content > div.markdown-source-view.cm-s-obsidian.mod-cm6.node-insert-event.is-readable-line-width.is-live-preview.is-folding.show-properties > div > div.cm-scroller > div.cm-sizer > div.inline-title"
+      ]
+    },
+    {
+      "enabled": true,
+      "name": "标题上方地址栏",
+      "selectors": [
+        "body > div.app-container > div.horizontal-main-container > div > div.workspace-split.mod-vertical.mod-root > div > div.workspace-tab-container > div.workspace-leaf.mod-active > div > div.view-header > div.view-header-title-container.mod-at-start.mod-fade.mod-at-end"
+      ]
+    }
+  ],
+  "uiScope": "ui-global",
+  "uiScopes": [
+    "ui-global",
+    "Admonition"
+  ],
+  "recentUiScopes": [
+    "Admonition",
+    "ui-global"
+  ],
+  "hideOriginal": true,
+  "extractOnly": false,
+  "cloudRegistryUrl": "https://raw.githubusercontent.com/dangehub/obsidian-translay-translator/refs/heads/main/translations/registry.json",
+  "cloudRegistryLang": "zh",
+  "editMode": false,
+  "smartOriginal": true,
+  "maxTextLength": 500,
+  "fabPosition": {
+    "x": 218.35935974121094,
+    "y": 169.06959533691406
+  }
+}

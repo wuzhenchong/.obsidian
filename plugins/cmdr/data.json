@@ -14,7 +14,14 @@
   ],
   "rightRibbon": [],
   "titleBar": [],
-  "statusBar": [],
+  "statusBar": [
+    {
+      "id": "workspaces:load",
+      "icon": "lucide-layout",
+      "name": "工作区: 加载工作区布局",
+      "mode": "any"
+    }
+  ],
   "pageHeader": [
     {
       "id": "obsidian-git:backup-and-close",
