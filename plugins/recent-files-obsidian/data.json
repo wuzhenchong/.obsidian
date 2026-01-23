@@ -1,24 +1,108 @@
 {
   "recentFiles": [
     {
-      "basename": "2026年",
-      "path": "1-日记/2026年.md"
+      "basename": "20260121.LLM通过tools增强潮流计算",
+      "path": "A-随记/20260121.LLM通过tools增强潮流计算.md"
     },
     {
-      "basename": "Claude Code",
-      "path": "3-科研工具/AI使用/Claude Code.md"
+      "basename": "20260122.LLM参与潮流计算流程.excalidraw",
+      "path": "Excalidraw/20260122.LLM参与潮流计算流程.excalidraw.md"
+    },
+    {
+      "basename": "0-科研日志",
+      "path": "3-科研idea/0-科研日志.md"
     },
     {
       "basename": "目前要做的算例",
       "path": "目前要做的算例.md"
     },
     {
-      "basename": "2025年度总结",
-      "path": "1-日记/2025年度总结.md"
+      "basename": "要像跟ai对话一样管理自己的人生（小红书）",
+      "path": "B-感悟/要像跟ai对话一样管理自己的人生（小红书）.md"
+    },
+    {
+      "basename": "Claude Code",
+      "path": "3-科研工具/AI使用/Claude Code.md"
+    },
+    {
+      "basename": "【idea】输配协同状态估计",
+      "path": "3-科研idea/【idea】输配协同状态估计.md"
+    },
+    {
+      "basename": "2025-W20",
+      "path": "1-日记/weekly/2025-W20.md"
+    },
+    {
+      "basename": "科研术语中英文及缩写",
+      "path": "3-科研工具/科研术语中英文及缩写.md"
+    },
+    {
+      "basename": "科研英语用词表达积累",
+      "path": "3-科研工具/科研英语用词表达积累.md"
     },
     {
       "basename": "用户信息账号密码",
       "path": "_attach/!隐私不放在git/用户信息账号密码.md"
+    },
+    {
+      "basename": "K 字签证",
+      "path": "9-政治与时事/时政卡片箱/K 字签证.md"
+    },
+    {
+      "basename": "A-时事热点",
+      "path": "9-政治与时事/A-时事热点.md"
+    },
+    {
+      "basename": "2026年",
+      "path": "1-日记/2026年.md"
+    },
+    {
+      "basename": "Y-油管漫谈",
+      "path": "9-政治与时事/Y-油管漫谈.md"
+    },
+    {
+      "basename": "习近平如何阻止“斩杀线”出现在中国？",
+      "path": "9-政治与时事/时政卡片箱/习近平如何阻止“斩杀线”出现在中国？.md"
+    },
+    {
+      "basename": "毛泽东系列",
+      "path": "9-政治与时事/时政卡片箱/毛泽东系列.md"
+    },
+    {
+      "basename": "特朗普活捉委内瑞拉总统马杜罗",
+      "path": "9-政治与时事/时政卡片箱/特朗普活捉委内瑞拉总统马杜罗.md"
+    },
+    {
+      "basename": "日方欲武力介入台海，中方将其定义为侵略",
+      "path": "9-政治与时事/时政卡片箱/日方欲武力介入台海，中方将其定义为侵略.md"
+    },
+    {
+      "basename": "杭州局配网项目",
+      "path": "5-实验室项目/项目done/杭州局配网项目.md"
+    },
+    {
+      "basename": "【idea】STF和图计算的结合",
+      "path": "%电网建模/【idea】STF和图计算的结合.md"
+    },
+    {
+      "basename": "如何用Ai做搜索和综述",
+      "path": "3-科研工具/AI使用/如何用Ai做搜索和综述.md"
+    },
+    {
+      "basename": "AI客户端平台",
+      "path": "3-科研工具/AI使用/AI客户端平台.md"
+    },
+    {
+      "basename": "海南自贸区全岛封关运行",
+      "path": "9-政治与时事/时政卡片箱/海南自贸区全岛封关运行.md"
+    },
+    {
+      "basename": "中国的2025，中美终极对决",
+      "path": "9-政治与时事/时政卡片箱/中国的2025，中美终极对决.md"
+    },
+    {
+      "basename": "2025年度总结",
+      "path": "1-日记/2025年度总结.md"
     },
     {
       "basename": "【idea】基于STF的状态估计",
@@ -29,96 +113,12 @@
       "path": "3-科研idea/大模型的潜在方向.md"
     },
     {
-      "basename": "海南自贸区",
-      "path": "9-政治与时事/时政卡片箱/海南自贸区.md"
-    },
-    {
       "basename": "中国的户籍制度",
       "path": "9-政治与时事/时政卡片箱/中国的户籍制度.md"
     },
     {
-      "basename": "Y-油管漫谈",
-      "path": "9-政治与时事/Y-油管漫谈.md"
-    },
-    {
       "basename": "图神经网络潜在方向",
       "path": "3-科研idea/图神经网络潜在方向.md"
-    },
-    {
-      "basename": "【idea】输配协同状态估计",
-      "path": "3-科研idea/【idea】输配协同状态估计.md"
-    },
-    {
-      "basename": "【idea】基于STF的分布式计算",
-      "path": "%电网建模/【idea】基于STF的分布式计算.md"
-    },
-    {
-      "basename": "分布式计算",
-      "path": "@数学方法库/分布式计算.md"
-    },
-    {
-      "basename": "0-科研想法 log",
-      "path": "3-科研idea/0-科研想法 log.md"
-    },
-    {
-      "basename": "【开发】cim配电网解析和计算",
-      "path": "5-实验室项目/【开发】cim配电网解析和计算.md"
-    },
-    {
-      "basename": "2025年",
-      "path": "1-日记/2025年.md"
-    },
-    {
-      "basename": "云雾API",
-      "path": "3-科研工具/AI使用/云雾API.md"
-    },
-    {
-      "basename": "大分支问题",
-      "path": "3-科研idea/大分支问题.md"
-    },
-    {
-      "basename": "OB的教程记录",
-      "path": "obsidian学习/OB的教程记录.md"
-    },
-    {
-      "basename": "面向配电网络计算的CIM解析和拓扑建模方法",
-      "path": "4-写论文/面向配电网络计算的CIM解析和拓扑建模方法.md"
-    },
-    {
-      "basename": "电力系统模型的数据格式",
-      "path": "3-科研工具/电力计算/电力系统模型的数据格式.md"
-    },
-    {
-      "basename": "美国军队VS中国军队，美军能赢吗",
-      "path": "9-政治与时事/时政卡片箱/美国军队VS中国军队，美军能赢吗.md"
-    },
-    {
-      "basename": "导航-科研",
-      "path": "homepage/导航-科研.md"
-    },
-    {
-      "basename": "Base-政治与时事",
-      "path": "Base-政治与时事.base"
-    },
-    {
-      "basename": "李世默：中国资本服从政治 VS 美国资本凌驾一切",
-      "path": "9-政治与时事/时政卡片箱/李世默：中国资本服从政治 VS 美国资本凌驾一切.md"
-    },
-    {
-      "basename": "0-科研日志",
-      "path": "3-科研idea/0-科研日志.md"
-    },
-    {
-      "basename": "Zotero使用指南",
-      "path": "3-科研工具/zotero使用/Zotero使用指南.md"
-    },
-    {
-      "basename": "matpower",
-      "path": "3-科研工具/电力计算/matpower.md"
-    },
-    {
-      "basename": "0-科研不懂的问题",
-      "path": "3-科研idea/0-科研不懂的问题.md"
     }
   ],
   "omittedPaths": [

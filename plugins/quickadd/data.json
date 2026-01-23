@@ -8,7 +8,7 @@
       "templatePath": "_templater/using/随记模板（QuickAdd）.md",
       "fileNameFormat": {
         "enabled": true,
-        "format": "{{DATE:YYYYMMDD}}-{{NAME}}"
+        "format": "{{DATE:YYYYMMDD}}.{{NAME}}"
       },
       "folder": {
         "enabled": true,
@@ -35,7 +35,7 @@
   "devMode": false,
   "templateFolderPath": "_templater/using",
   "announceUpdates": "all",
-  "version": "2.8.0",
+  "version": "2.9.4",
   "globalVariables": {},
   "onePageInputEnabled": false,
   "disableOnlineFeatures": true,

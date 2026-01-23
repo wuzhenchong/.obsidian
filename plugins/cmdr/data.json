@@ -49,15 +49,21 @@
       "mode": "any"
     },
     {
-      "id": "workspace:toggle-pin",
-      "icon": "lucide-pin",
-      "name": "解锁/锁定",
-      "mode": "any"
-    },
-    {
       "id": "cmdr:macro-1",
       "icon": "lucide-fullscreen",
       "name": "Commander: 全屏-收起左右菜单",
+      "mode": "any"
+    },
+    {
+      "id": "open-tab-settings:toggle-open-in-new-tab",
+      "icon": "lucide-mouse-pointer-square-dashed",
+      "name": "Open Tab Settings: Toggle always open in new tab",
+      "mode": "any"
+    },
+    {
+      "id": "workspace:toggle-pin",
+      "icon": "lucide-pin",
+      "name": "解锁/锁定",
       "mode": "any"
     }
   ],
