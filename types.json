@@ -53,6 +53,7 @@
     "TQ_show_tree": "checkbox",
     "TQ_show_urgency": "checkbox",
     "excalidraw-embed-md": "checkbox",
-    "来源": "multitext"
+    "来源": "multitext",
+    "excalidraw-export-internal-links": "checkbox"
   }
 }
