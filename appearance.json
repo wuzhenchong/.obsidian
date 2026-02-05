@@ -1,8 +1,8 @@
 {
   "accentColor": "",
   "cssTheme": "Border",
-  "theme": "moonstone",
-  "interfaceFontFamily": "仓耳今楷01,霞鹜文楷 GB 屏幕阅读版",
+  "theme": "obsidian",
+  "interfaceFontFamily": "仓耳今楷01",
   "baseFontSize": 16,
   "monospaceFontFamily": "",
   "nativeMenus": false,

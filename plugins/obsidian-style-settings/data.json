@@ -115,5 +115,9 @@
   "Editor@@h1-divider-on": true,
   "Editor@@h2-divider-on": true,
   "Editor@@text-align-justify": false,
-  "Editor@@line-height-customize": 1.6
+  "Editor@@line-height-customize": 1.6,
+  "Appearance-light@@theme-light-style-select": "theme-light-background-default",
+  "Appearance-light@@card-layout-open-light": true,
+  "Appearance-dark@@card-layout-open-dark": true,
+  "Appearance-dark@@theme-dark-style-select": "theme-dark-background-darker"
 }
