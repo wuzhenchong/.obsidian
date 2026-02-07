@@ -223,12 +223,12 @@
     {
       "id": "editing-toolbar:insert-link",
       "name": "Insert link []()",
-      "icon": "external-link"
+      "icon": "link"
     },
     {
       "id": "SubmenuCommands-mdwxp9yf3",
       "name": "submenu",
-      "icon": "link",
+      "icon": "file-symlink",
       "SubmenuCommands": [
         {
           "id": "editing-toolbar:editor:attach-file",
@@ -250,7 +250,7 @@
     {
       "id": "SubmenuCommands-luc8efull",
       "name": "submenu",
-      "icon": "add-note-glyph",
+      "icon": "blocks",
       "SubmenuCommands": [
         {
           "id": "obsidian-admonition:insert-admonition",
