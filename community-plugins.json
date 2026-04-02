@@ -16,12 +16,12 @@
   "cmdr",
   "obsidian-tasks-plugin",
   "table-editor-obsidian",
-  "github-copilot",
   "file-cleaner-redux",
   "obsidian-emoji-toolbar",
   "quickadd",
   "open-tab-settings",
   "recent-files-obsidian",
   "obsidian-zotero-desktop-connector",
-  "automatic-table-of-contents"
+  "automatic-table-of-contents",
+  "claudian"
 ]
