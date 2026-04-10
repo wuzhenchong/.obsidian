@@ -554,13 +554,15 @@ function applyLanguagePairSpacing(ctx, languagePairs, prefixDict, customCategori
   return { ...ctx, content, curCh };
 }
 function detectBoundarySpaceState(content, leftSymbols, rightSymbols) {
-  const builtInSymbols = '\u3010\u3011\uFF08\uFF09\u300A\u300B\uFF0C\u3002\u3001\uFF1F\uFF1A\uFF1B\u2018\u2019\u201C\u201D\u300C\u300E\u300F\u300D\uFF01"';
-  const escapedLeft = escapeForCharClass(leftSymbols + builtInSymbols);
-  const escapedRight = escapeForCharClass(rightSymbols + builtInSymbols);
+  const builtInBothSymbols = `"'`;
+  const builtInLeftSoftSymbols = `\u3010\u3011\uFF08\uFF09\u300A\u300B\uFF0C\u3002\u3001\uFF1F\uFF1A\uFF1B\u2018\u2019\u201C\u201D\u300C\u300E\u300F\u300D\uFF01${builtInBothSymbols}[({`;
+  const builtInRightSoftSymbols = `\u3010\u3011\uFF08\uFF09\u300A\u300B\uFF0C\u3002\u3001\uFF1F\uFF1A\uFF1B\u2018\u2019\u201C\u201D\u300C\u300E\u300F\u300D\uFF01${builtInBothSymbols},.?!:;])}`;
+  const escapedStart = escapeForCharClass(rightSymbols + builtInRightSoftSymbols);
+  const escapedEnd = escapeForCharClass(leftSymbols + builtInLeftSoftSymbols);
   const regStrictSpaceStart = /^\0?\s/;
   const regStrictSpaceEnd = /\s\0?$/;
-  const regStartWithSpace = new RegExp(`^\\0?[\\s${escapedLeft}]`);
-  const regEndWithSpace = new RegExp(`[\\s${escapedRight}]\\0?$`);
+  const regStartWithSpace = new RegExp(`^\\0?[\\s${escapedStart}]`);
+  const regEndWithSpace = new RegExp(`[\\s${escapedEnd}]\\0?$`);
   let start = 0 /* none */;
   let end = 0 /* none */;
   if (regStartWithSpace.test(content) || content.startsWith("<br>")) {
@@ -1098,6 +1100,15 @@ function splitTextWithLinkAndUserDefined(text, regExps) {
   retArray = retArray.sort((a, b) => a.begin - b.begin);
   return retArray;
 }
+function isCursorInUserDefinedRegexBlock(lineText, column, regExps) {
+  const parts = splitTextWithLinkAndUserDefined(lineText, regExps);
+  for (const part of parts) {
+    if (part.type === "user-defined" /* user */ && column >= part.begin && column < part.end) {
+      return true;
+    }
+  }
+  return false;
+}
 function str2SpaceState(s) {
   switch (s) {
     case "+":
@@ -1252,7 +1263,8 @@ var DEFAULT_SETTINGS = {
   InlineLinkSpaceMode: 1 /* soft */,
   InlineLinkSmartSpace: true,
   UserDefinedRegSwitch: true,
-  UserDefinedRegExp: "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s\uFF08\uFF09\u300A\u300B\u3002,\uFF0C\uFF01\uFF1F;\uFF1B\uFF1A\u201C\u201D\u2018\u2019\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
+  UserDefinedRegExp: "{{.*?}}|++\n<.*?>|--\n\\[\\!.*?\\][-+]{0,1}|-+\n(file:///|https?://|ftp://|obsidian://|zotero://|www.)[^\\s\uFF08\uFF09\u300A\u300B\u3002,\uFF0C\uFF01\uFF1F;\uFF1B\uFF1A\u201C\u201D\u2018\u2019\\)\\(\\[\\]\\{\\}']+|--\n\n[a-zA-Z0-9_\\-.]+@[a-zA-Z0-9_\\-.]+|++\n// Tags in Obsidian//(?<!#)#[\\u4e00-\\u9fa5\\w-\\/]+|++",
+  UserRulesRespectUserDefinedRegexBlocks: false,
   debug: false,
   StrictModeEnter: false,
   StrictLineMode: "enter_twice" /* EnterTwice */,
@@ -1308,9 +1320,9 @@ var locale = {
     },
     softSpaceSymbols: {
       leftName: "Custom Extra Left Soft Space Symbols",
-      leftDesc: "Common full-width punctuations are built-in. Add extra symbols here (like -).",
+      leftDesc: `Common full-width punctuation, quotes (' ") and opening brackets ([ ( {) are built in. Add extra left-side symbols here (such as -).`,
       rightName: "Custom Extra Right Soft Space Symbols",
-      rightDesc: "Common full-width punctuations are built-in. Add extra symbols here (like -)."
+      rightDesc: `Common full-width punctuation, quotes (' "), closing brackets (] ) }) and half-width punctuation (. , ? ! : ;) are built in. Add extra right-side symbols here (such as -).`
     },
     customScriptCategories: {
       name: "Custom Script Categories",
@@ -1340,7 +1352,11 @@ var locale = {
     },
     userDefinedRegexp: {
       name: "User-defined Regular Expression, one expression per line",
-      desc: "User-defined regular expression, matched to the content is not formatted, one expression per line, do not feel free to add spaces at the end of the line.The end of each line of three characters fixed as | and two space strategy symbols, space strategy symbols for - = +, respectively, on behalf of not requiring spaces (-), soft spaces (=), strict spaces (+).These two space strategy symbols are the space strategy for the left and right sides of the matching block respectively"
+      desc: "User-defined regular expression, matched to the content is not formatted, one expression per line, do not feel free to add spaces at the end of the line.The end of each line of three characters fixed as | and two space strategy symbols, space strategy symbols for - = +, respectively, on behalf of not requiring spaces (-), soft spaces (=), strict spaces (+).These two space strategy symbols are the space strategy for the left and right sides of the matching block respectively. Lines starting with // are treated as comments"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "User rules respect custom regex blocks",
+      desc: "When enabled, text matched by custom regex blocks will not trigger auto user rules."
     },
     excludeFoldersFiles: {
       name: "Exclude Folders/Files",
@@ -1472,10 +1488,6 @@ var locale = {
     aboutRegexp: {
       header: "For knowledge about regular expressions, see ",
       text: "Yifeng Nguyen: A Concise Tutorial on Regular Expressions"
-    },
-    instructionsRegexp: {
-      header: "Instructions and examples for using regular expression rules: ",
-      text: "Customizing Regular Expression Rules"
     },
     customizeSelectionRule: "Customize Selection Replace Rule",
     customizeDeleteRule: "Customize Delete Rule",
@@ -1616,9 +1628,9 @@ var locale2 = {
     },
     softSpaceSymbols: {
       leftName: "\u81EA\u5B9A\u4E49\u5DE6\u4FA7\u8F6F\u7A7A\u683C\u989D\u5916\u7B26\u53F7",
-      leftDesc: "\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u5DF2\u5185\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u7B26\u53F7\uFF08\u5982-\uFF09",
+      leftDesc: `\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u3001\u82F1\u6587\u5F15\u53F7\uFF08' "\uFF09\u548C\u5DE6\u62EC\u53F7\uFF08[ ( {\uFF09\u5DF2\u5185\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u5DE6\u4FA7\u7B26\u53F7\uFF08\u5982 -\uFF09`,
       rightName: "\u81EA\u5B9A\u4E49\u53F3\u4FA7\u8F6F\u7A7A\u683C\u989D\u5916\u7B26\u53F7",
-      rightDesc: "\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u5DF2\u5185\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u7B26\u53F7\uFF08\u5982-\uFF09"
+      rightDesc: `\u5E38\u89C1\u7684\u5168\u89D2\u6807\u70B9\u3001\u82F1\u6587\u5F15\u53F7\uFF08' "\uFF09\u3001\u53F3\u62EC\u53F7\uFF08] ) }\uFF09\u4EE5\u53CA\u82F1\u6587\u534A\u89D2\u6807\u70B9\uFF08. , ? ! : ;\uFF09\u5DF2\u5185\u7F6E\u4E3A\u53F3\u8F6F\u7A7A\u683C\u7B26\u53F7\u3002\u5728\u6B64\u6DFB\u52A0\u989D\u5916\u7684\u53F3\u4FA7\u7B26\u53F7\uFF08\u5982 -\uFF09`
     },
     customScriptCategories: {
       name: "\u81EA\u5B9A\u4E49\u8BED\u8A00/\u7B26\u53F7\u96C6",
@@ -1648,7 +1660,11 @@ var locale2 = {
     },
     userDefinedRegexp: {
       name: "\u7528\u6237\u5B9A\u4E49\u7684\u6B63\u5219\u8868\u8FBE\u5F0F",
-      desc: "\u7528\u6237\u81EA\u5B9A\u4E49\u6B63\u5219\u8868\u8FBE\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5185\u5BB9\u4E0D\u8FDB\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u4E2A\u8868\u8FBE\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u968F\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u4E2A\u5B57\u7B26\u7684\u56FA\u5B9A\u4E3A|\u548C\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u4E3A-=+\uFF0C\u5206\u522B\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8F6F\u7A7A\u683C(=)\uFF0C\u4E25\u683C\u7A7A\u683C(+)\u3002\u8FD9\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u5206\u522B\u4E3A\u5339\u914D\u533A\u5757\u7684\u5DE6\u53F3\u4E24\u8FB9\u7684\u7A7A\u683C\u7B56\u7565"
+      desc: "\u7528\u6237\u81EA\u5B9A\u4E49\u6B63\u5219\u8868\u8FBE\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5185\u5BB9\u4E0D\u8FDB\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u4E2A\u8868\u8FBE\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u968F\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u4E2A\u5B57\u7B26\u7684\u56FA\u5B9A\u4E3A|\u548C\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u4E3A-=+\uFF0C\u5206\u522B\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8F6F\u7A7A\u683C(=)\uFF0C\u4E25\u683C\u7A7A\u683C(+)\u3002\u8FD9\u4E24\u4E2A\u7A7A\u683C\u7B56\u7565\u7B26\u53F7\u5206\u522B\u4E3A\u5339\u914D\u533A\u5757\u7684\u5DE6\u53F3\u4E24\u8FB9\u7684\u7A7A\u683C\u7B56\u7565\u3002\u4EE5 // \u5F00\u5934\u7684\u884C\u4F5C\u4E3A\u6CE8\u91CA"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u81EA\u5B9A\u4E49\u6B63\u5219\u533A\u5757\u540C\u65F6\u963B\u6B62\u7528\u6237\u89C4\u5219",
+      desc: "\u542F\u7528\u540E\uFF0C\u547D\u4E2D\u81EA\u5B9A\u4E49\u6B63\u5219\u533A\u5757\u7684\u6587\u672C\u5C06\u4E0D\u4F1A\u89E6\u53D1\u81EA\u52A8\u7528\u6237\u89C4\u5219\u3002"
     },
     excludeFoldersFiles: {
       name: "\u6392\u9664\u6587\u4EF6\u5939/\u6587\u4EF6",
@@ -1780,10 +1796,6 @@ var locale2 = {
     aboutRegexp: {
       header: "\u6B63\u5219\u8868\u8FBE\u5F0F\u76F8\u5173\u77E5\u8BC6\uFF0C\u89C1 ",
       text: "\u300A\u962E\u4E00\u5CF0\uFF1A\u6B63\u5219\u8868\u8FBE\u5F0F\u7B80\u660E\u6559\u7A0B\u300B"
-    },
-    instructionsRegexp: {
-      header: "\u6B63\u5219\u8868\u8FBE\u5F0F\u89C4\u5219\u4F7F\u7528\u8BF4\u660E\u4E0E\u793A\u4F8B\uFF1A ",
-      text: "\u81EA\u5B9A\u4E49\u6B63\u5219\u8868\u8FBE\u5F0F\u89C4\u5219"
     },
     customizeSelectionRule: "\u81EA\u5B9A\u4E49\u9009\u4E2D\u6587\u672C\u7F16\u8F91\u589E\u5F3A\u89C4\u5219",
     customizeDeleteRule: "\u81EA\u5B9A\u4E49\u5220\u9664\u7F16\u8F91\u589E\u5F3A\u89C4\u5219",
@@ -1924,9 +1936,9 @@ var locale3 = {
     },
     softSpaceSymbols: {
       leftName: "\u81EA\u5B9A\u7FA9\u5DE6\u5074\u8EDF\u7A7A\u683C\u984D\u5916\u7B26\u865F",
-      leftDesc: "\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u5DF2\u5167\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u7B26\u865F\uFF08\u5982-\uFF09",
+      leftDesc: `\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u3001\u82F1\u6587\u5F15\u865F\uFF08' "\uFF09\u548C\u5DE6\u62EC\u865F\uFF08[ ( {\uFF09\u5DF2\u5167\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u5DE6\u5074\u7B26\u865F\uFF08\u5982 -\uFF09`,
       rightName: "\u81EA\u5B9A\u7FA9\u53F3\u5074\u8EDF\u7A7A\u683C\u984D\u5916\u7B26\u865F",
-      rightDesc: "\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u5DF2\u5167\u7F6E\u652F\u6301\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u7B26\u865F\uFF08\u5982-\uFF09"
+      rightDesc: `\u5E38\u898B\u7684\u5168\u89D2\u6A19\u9EDE\u3001\u82F1\u6587\u5F15\u865F\uFF08' "\uFF09\u3001\u53F3\u62EC\u865F\uFF08] ) }\uFF09\u4EE5\u53CA\u82F1\u6587\u534A\u89D2\u6A19\u9EDE\uFF08. , ? ! : ;\uFF09\u5DF2\u5167\u7F6E\u70BA\u53F3\u5074\u8EDF\u7A7A\u683C\u7B26\u865F\u3002\u5728\u6B64\u6DFB\u52A0\u984D\u5916\u7684\u53F3\u5074\u7B26\u865F\uFF08\u5982 -\uFF09`
     },
     customScriptCategories: {
       name: "\u81EA\u5B9A\u7FA9\u8A9E\u8A00/\u7B26\u865F\u96C6",
@@ -1960,7 +1972,11 @@ var locale3 = {
     },
     userDefinedRegexp: {
       name: "\u7528\u6236\u5B9A\u7FA9\u7684\u6B63\u5247\u8868\u9054\u5F0F",
-      desc: "\u7528\u6236\u81EA\u5B9A\u7FA9\u6B63\u5247\u8868\u9054\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5167\u5BB9\u4E0D\u9032\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u500B\u8868\u9054\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u96A8\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u500B\u5B57\u7B26\u7684\u56FA\u5B9A\u70BA|\u548C\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u70BA-=+\uFF0C\u5206\u5225\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8EDF\u7A7A\u683C(=)\uFF0C\u56B4\u683C\u7A7A\u683C(+)\u3002\u9019\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u5206\u5225\u70BA\u5339\u914D\u5340\u584A\u7684\u5DE6\u53F3\u5169\u908A\u7684\u7A7A\u683C\u7B56\u7565"
+      desc: "\u7528\u6236\u81EA\u5B9A\u7FA9\u6B63\u5247\u8868\u9054\u5F0F\uFF0C\u5339\u914D\u5230\u7684\u5167\u5BB9\u4E0D\u9032\u884C\u683C\u5F0F\u5316\uFF0C\u6BCF\u884C\u4E00\u500B\u8868\u9054\u5F0F\uFF0C\u884C\u5C3E\u4E0D\u8981\u96A8\u610F\u52A0\u7A7A\u683C\u3002\u6BCF\u884C\u672B\u5C3E3\u500B\u5B57\u7B26\u7684\u56FA\u5B9A\u70BA|\u548C\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\uFF0C\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u70BA-=+\uFF0C\u5206\u5225\u4EE3\u8868\u4E0D\u8981\u6C42\u7A7A\u683C(-)\uFF0C\u8EDF\u7A7A\u683C(=)\uFF0C\u56B4\u683C\u7A7A\u683C(+)\u3002\u9019\u5169\u500B\u7A7A\u683C\u7B56\u7565\u7B26\u865F\u5206\u5225\u70BA\u5339\u914D\u5340\u584A\u7684\u5DE6\u53F3\u5169\u908A\u7684\u7A7A\u683C\u7B56\u7565\u3002\u4EE5 // \u958B\u982D\u7684\u884C\u4F5C\u70BA\u8A3B\u91CB"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u81EA\u5B9A\u7FA9\u6B63\u5247\u5340\u584A\u540C\u6642\u963B\u6B62\u7528\u6236\u898F\u5247",
+      desc: "\u555F\u7528\u5F8C\uFF0C\u547D\u4E2D\u81EA\u5B9A\u7FA9\u6B63\u5247\u5340\u584A\u7684\u6587\u672C\u5C07\u4E0D\u6703\u89F8\u767C\u81EA\u52D5\u7528\u6236\u898F\u5247\u3002"
     },
     excludeFoldersFiles: {
       name: "\u6392\u9664\u6587\u4EF6\u593E/\u6587\u4EF6",
@@ -2092,10 +2108,6 @@ var locale3 = {
     aboutRegexp: {
       header: "\u6B63\u5247\u8868\u9054\u5F0F\u76F8\u95DC\u77E5\u8B58\uFF0C\u898B ",
       text: "\u300A\u962E\u4E00\u5CF0\uFF1A\u6B63\u5247\u8868\u9054\u5F0F\u7C21\u660E\u6559\u7A0B\u300B"
-    },
-    instructionsRegexp: {
-      header: "\u6B63\u5247\u8868\u9054\u5F0F\u898F\u5247\u4F7F\u7528\u8AAA\u660E\u8207\u793A\u4F8B\uFF1A ",
-      text: "\u81EA\u5B9A\u7FA9\u6B63\u5247\u8868\u9054\u5F0F\u898F\u5247"
     },
     customizeSelectionRule: "\u81EA\u5B9A\u7FA9\u9078\u4E2D\u6587\u672C\u7DE8\u8F2F\u589E\u5F3A\u898F\u5247",
     customizeDeleteRule: "\u81EA\u5B9A\u7FA9\u522A\u9664\u7DE8\u8F2F\u589E\u5F3A\u898F\u5247",
@@ -2236,9 +2248,9 @@ var locale4 = {
     },
     softSpaceSymbols: {
       leftName: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u043C\u044F\u0433\u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0431\u0435\u043B\u0430 \u0441\u043B\u0435\u0432\u0430",
-      leftDesc: "\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0437\u0434\u0435\u0441\u044C (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -).",
+      leftDesc: `\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F, \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0435 \u043A\u0430\u0432\u044B\u0447\u043A\u0438 (' "), \u0430 \u0442\u0430\u043A\u0436\u0435 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0435 \u0441\u043A\u043E\u0431\u043A\u0438 ([ ( {) \u0443\u0436\u0435 \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0437\u0434\u0435\u0441\u044C \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0434\u043B\u044F \u043B\u0435\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D\u044B (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -).`,
       rightName: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u043C\u044F\u0433\u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0431\u0435\u043B\u0430 \u0441\u043F\u0440\u0430\u0432\u0430",
-      rightDesc: "\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0437\u0434\u0435\u0441\u044C (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -)."
+      rightDesc: `\u041E\u0431\u0449\u0435\u043F\u0440\u0438\u043D\u044F\u0442\u044B\u0435 \u043F\u043E\u043B\u043D\u043E\u0448\u0438\u0440\u0438\u043D\u043D\u044B\u0435 \u0437\u043D\u0430\u043A\u0438 \u043F\u0440\u0435\u043F\u0438\u043D\u0430\u043D\u0438\u044F, \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0435 \u043A\u0430\u0432\u044B\u0447\u043A\u0438 (' "), \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0435 \u0441\u043A\u043E\u0431\u043A\u0438 (] ) }), \u0430 \u0442\u0430\u043A\u0436\u0435 \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0430\u044F \u043F\u043E\u043B\u0443\u0448\u0438\u0440\u0438\u043D\u043D\u0430\u044F \u043F\u0443\u043D\u043A\u0442\u0443\u0430\u0446\u0438\u044F (. , ? ! : ;) \u0443\u0436\u0435 \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B \u043A\u0430\u043A \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u043F\u0440\u0430\u0432\u043E\u0433\u043E \u043C\u044F\u0433\u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0431\u0435\u043B\u0430. \u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0437\u0434\u0435\u0441\u044C \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0434\u043B\u044F \u043F\u0440\u0430\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D\u044B (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, -).`
     },
     customScriptCategories: {
       name: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438 \u0441\u043A\u0440\u0438\u043F\u0442\u043E\u0432",
@@ -2272,7 +2284,11 @@ var locale4 = {
     },
     userDefinedRegexp: {
       name: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435, \u043E\u0434\u043D\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0443",
-      desc: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435, \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0435 \u0441 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u044B\u043C, \u043D\u0435 \u0444\u043E\u0440\u043C\u0430\u0442\u0438\u0440\u0443\u0435\u0442\u0441\u044F, \u043E\u0434\u043D\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0443, \u043D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0439\u0442\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B \u0432 \u043A\u043E\u043D\u0446\u0435 \u0441\u0442\u0440\u043E\u043A\u0438.\u041A\u043E\u043D\u0435\u0446 \u043A\u0430\u0436\u0434\u043E\u0439 \u0441\u0442\u0440\u043E\u043A\u0438 \u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u043D \u0442\u0440\u0435\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438: | \u0438 \u0434\u0432\u0443\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432, \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 - \u044D\u0442\u043E - = +, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E \u043E\u0431\u043E\u0437\u043D\u0430\u0447\u0430\u044E\u0442 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 (-), \u043C\u044F\u0433\u043A\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (=), \u0441\u0442\u0440\u043E\u0433\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (+).\u042D\u0442\u0438 \u0434\u0432\u0430 \u0441\u0438\u043C\u0432\u043E\u043B\u0430 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0435\u0439 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u0434\u043B\u044F \u043B\u0435\u0432\u043E\u0439 \u0438 \u043F\u0440\u0430\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0433\u043E \u0431\u043B\u043E\u043A\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E"
+      desc: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E\u0435 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435, \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0435 \u0441 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u044B\u043C, \u043D\u0435 \u0444\u043E\u0440\u043C\u0430\u0442\u0438\u0440\u0443\u0435\u0442\u0441\u044F, \u043E\u0434\u043D\u043E \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0442\u0440\u043E\u043A\u0443, \u043D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0439\u0442\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B \u0432 \u043A\u043E\u043D\u0446\u0435 \u0441\u0442\u0440\u043E\u043A\u0438.\u041A\u043E\u043D\u0435\u0446 \u043A\u0430\u0436\u0434\u043E\u0439 \u0441\u0442\u0440\u043E\u043A\u0438 \u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u043D \u0442\u0440\u0435\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438: | \u0438 \u0434\u0432\u0443\u043C\u044F \u0441\u0438\u043C\u0432\u043E\u043B\u0430\u043C\u0438 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432, \u0441\u0438\u043C\u0432\u043E\u043B\u044B \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 - \u044D\u0442\u043E - = +, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E \u043E\u0431\u043E\u0437\u043D\u0430\u0447\u0430\u044E\u0442 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 (-), \u043C\u044F\u0433\u043A\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (=), \u0441\u0442\u0440\u043E\u0433\u0438\u0435 \u043F\u0440\u043E\u0431\u0435\u043B\u044B (+).\u042D\u0442\u0438 \u0434\u0432\u0430 \u0441\u0438\u043C\u0432\u043E\u043B\u0430 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0435\u0439 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432 \u0434\u043B\u044F \u043B\u0435\u0432\u043E\u0439 \u0438 \u043F\u0440\u0430\u0432\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u043D \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0433\u043E \u0431\u043B\u043E\u043A\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E. \u0421\u0442\u0440\u043E\u043A\u0438, \u043D\u0430\u0447\u0438\u043D\u0430\u044E\u0449\u0438\u0435\u0441\u044F \u0441 //, \u043E\u0431\u0440\u0430\u0431\u0430\u0442\u044B\u0432\u0430\u044E\u0442\u0441\u044F \u043A\u0430\u043A \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0438"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0443\u0432\u0430\u0436\u0430\u044E\u0442 \u0431\u043B\u043E\u043A\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439",
+      desc: "\u041F\u0440\u0438 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0438 \u0442\u0435\u043A\u0441\u0442, \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0438\u0439 \u0441 \u0431\u043B\u043E\u043A\u0430\u043C\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439, \u043D\u0435 \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0430\u0442\u044C \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u0430."
     },
     excludeFoldersFiles: {
       name: "\u0418\u0441\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043F\u0430\u043F\u043A\u0438/\u0444\u0430\u0439\u043B\u044B",
@@ -2404,10 +2420,6 @@ var locale4 = {
     aboutRegexp: {
       header: "\u0414\u043B\u044F \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u043E \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F\u0445 \u0441\u043C. ",
       text: "Yifeng Nguyen: \u041A\u0440\u0430\u0442\u043A\u043E\u0435 \u0440\u0443\u043A\u043E\u0432\u043E\u0434\u0441\u0442\u0432\u043E \u043F\u043E \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u043C \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u044F\u043C"
-    },
-    instructionsRegexp: {
-      header: "\u0418\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u0438 \u0438 \u043F\u0440\u0438\u043C\u0435\u0440\u044B \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0440\u0430\u0432\u0438\u043B \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439: ",
-      text: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u043F\u0440\u0430\u0432\u0438\u043B \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0445 \u0432\u044B\u0440\u0430\u0436\u0435\u043D\u0438\u0439"
     },
     customizeSelectionRule: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0437\u0430\u043C\u0435\u043D\u044B \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043A\u0441\u0442\u0430",
     customizeDeleteRule: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F",
@@ -2548,9 +2560,9 @@ var locale5 = {
     },
     softSpaceSymbols: {
       leftName: "\u30AB\u30B9\u30BF\u30E0\u5DE6\u5074\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9\u8A18\u53F7",
-      leftDesc: "\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u306F\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002",
+      leftDesc: `\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u3001\u82F1\u8A9E\u306E\u5F15\u7528\u7B26\uFF08' "\uFF09\u3001\u304A\u3088\u3073\u958B\u304D\u62EC\u5F27\uFF08[ ( {\uFF09\u306F\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u5DE6\u5074\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002`,
       rightName: "\u30AB\u30B9\u30BF\u30E0\u53F3\u5074\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9\u8A18\u53F7",
-      rightDesc: "\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u306F\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002"
+      rightDesc: `\u4E00\u822C\u7684\u306A\u5168\u89D2\u53E5\u8AAD\u70B9\u3001\u82F1\u8A9E\u306E\u5F15\u7528\u7B26\uFF08' "\uFF09\u3001\u9589\u3058\u62EC\u5F27\uFF08] ) }\uFF09\u3001\u304A\u3088\u3073\u82F1\u8A9E\u306E\u534A\u89D2\u53E5\u8AAD\u70B9\uFF08. , ? ! : ;\uFF09\u306F\u53F3\u5074\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9\u8A18\u53F7\u3068\u3057\u3066\u5185\u8535\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u3053\u3053\u306B\u8FFD\u52A0\u306E\u53F3\u5074\u8A18\u53F7\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A-\uFF09\u3002`
     },
     customScriptCategories: {
       name: "\u30AB\u30B9\u30BF\u30E0\u6587\u5B57\u30AB\u30C6\u30B4\u30EA",
@@ -2580,7 +2592,11 @@ var locale5 = {
     },
     userDefinedRegexp: {
       name: "\u30E6\u30FC\u30B6\u30FC\u5B9A\u7FA9\u6B63\u898F\u8868\u73FE\uFF081\u884C\u306B1\u3064\uFF09",
-      desc: "\u30E6\u30FC\u30B6\u30FC\u5B9A\u7FA9\u306E\u6B63\u898F\u8868\u73FE\u3067\u3001\u30DE\u30C3\u30C1\u3057\u305F\u30B3\u30F3\u30C6\u30F3\u30C4\u306F\u66F8\u5F0F\u8A2D\u5B9A\u3055\u308C\u307E\u305B\u3093\u30021\u884C\u306B1\u3064\u306E\u5F0F\u3092\u8A18\u8FF0\u3057\u3001\u884C\u672B\u306B\u30B9\u30DA\u30FC\u30B9\u3092\u8FFD\u52A0\u3057\u306A\u3044\u3067\u304F\u3060\u3055\u3044\u3002\u5404\u884C\u306E\u672B\u5C3E3\u6587\u5B57\u306F | \u30682\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u3067\u56FA\u5B9A\u3055\u308C\u307E\u3059\u3002\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F - = + \u3067\u3001\u305D\u308C\u305E\u308C\u30B9\u30DA\u30FC\u30B9\u4E0D\u8981(-)\u3001\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9(=)\u3001\u53B3\u5BC6\u30B9\u30DA\u30FC\u30B9(+)\u3092\u610F\u5473\u3057\u307E\u3059\u3002\u3053\u308C\u30892\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F\u3001\u30DE\u30C3\u30C1\u30D6\u30ED\u30C3\u30AF\u306E\u5DE6\u53F3\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u3067\u3059\u3002"
+      desc: "\u30E6\u30FC\u30B6\u30FC\u5B9A\u7FA9\u306E\u6B63\u898F\u8868\u73FE\u3067\u3001\u30DE\u30C3\u30C1\u3057\u305F\u30B3\u30F3\u30C6\u30F3\u30C4\u306F\u66F8\u5F0F\u8A2D\u5B9A\u3055\u308C\u307E\u305B\u3093\u30021\u884C\u306B1\u3064\u306E\u5F0F\u3092\u8A18\u8FF0\u3057\u3001\u884C\u672B\u306B\u30B9\u30DA\u30FC\u30B9\u3092\u8FFD\u52A0\u3057\u306A\u3044\u3067\u304F\u3060\u3055\u3044\u3002\u5404\u884C\u306E\u672B\u5C3E3\u6587\u5B57\u306F | \u30682\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u3067\u56FA\u5B9A\u3055\u308C\u307E\u3059\u3002\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F - = + \u3067\u3001\u305D\u308C\u305E\u308C\u30B9\u30DA\u30FC\u30B9\u4E0D\u8981(-)\u3001\u30BD\u30D5\u30C8\u30B9\u30DA\u30FC\u30B9(=)\u3001\u53B3\u5BC6\u30B9\u30DA\u30FC\u30B9(+)\u3092\u610F\u5473\u3057\u307E\u3059\u3002\u3053\u308C\u30892\u3064\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u8A18\u53F7\u306F\u3001\u30DE\u30C3\u30C1\u30D6\u30ED\u30C3\u30AF\u306E\u5DE6\u53F3\u306E\u30B9\u30DA\u30FC\u30B7\u30F3\u30B0\u6226\u7565\u3067\u3059\u3002// \u3067\u59CB\u307E\u308B\u884C\u306F\u30B3\u30E1\u30F3\u30C8\u3068\u3057\u3066\u6271\u308F\u308C\u307E\u3059\u3002"
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\u30E6\u30FC\u30B6\u30FC\u30EB\u30FC\u30EB\u306F\u30AB\u30B9\u30BF\u30E0\u6B63\u898F\u8868\u73FE\u30D6\u30ED\u30C3\u30AF\u3092\u5C0A\u91CD",
+      desc: "\u6709\u52B9\u6642\u3001\u30AB\u30B9\u30BF\u30E0\u6B63\u898F\u8868\u73FE\u30D6\u30ED\u30C3\u30AF\u306B\u30DE\u30C3\u30C1\u3057\u305F\u30C6\u30AD\u30B9\u30C8\u306F\u81EA\u52D5\u30E6\u30FC\u30B6\u30FC\u30EB\u30FC\u30EB\u3092\u30C8\u30EA\u30AC\u30FC\u3057\u307E\u305B\u3093\u3002"
     },
     excludeFoldersFiles: {
       name: "\u9664\u5916\u30D5\u30A9\u30EB\u30C0/\u30D5\u30A1\u30A4\u30EB",
@@ -2712,10 +2728,6 @@ var locale5 = {
     aboutRegexp: {
       header: "\u6B63\u898F\u8868\u73FE\u306B\u3064\u3044\u3066\u306E\u8A73\u7D30\u306F\u4EE5\u4E0B\u3092\u53C2\u7167\u3057\u3066\u304F\u3060\u3055\u3044\uFF1A",
       text: "\u6B63\u898F\u8868\u73FE\u306E\u7C21\u6F54\u306A\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
-    },
-    instructionsRegexp: {
-      header: "\u6B63\u898F\u8868\u73FE\u30EB\u30FC\u30EB\u306E\u4F7F\u7528\u65B9\u6CD5\u3068\u4F8B\uFF1A",
-      text: "\u6B63\u898F\u8868\u73FE\u30EB\u30FC\u30EB\u306E\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA"
     },
     customizeSelectionRule: "\u9078\u629E\u7F6E\u63DB\u30EB\u30FC\u30EB\u306E\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA",
     customizeDeleteRule: "\u524A\u9664\u30EB\u30FC\u30EB\u306E\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA",
@@ -2856,9 +2868,9 @@ var locale6 = {
     },
     softSpaceSymbols: {
       leftName: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC67C\uCABD \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4 \uAE30\uD638",
-      leftDesc: "\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638\uB294 \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -).",
+      leftDesc: `\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638, \uC601\uBB38 \uC778\uC6A9\uBD80\uD638(' "), \uC5EC\uB294 \uAD04\uD638([ ( {)\uAC00 \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uC67C\uCABD \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -).`,
       rightName: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC624\uB978\uCABD \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4 \uAE30\uD638",
-      rightDesc: "\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638\uB294 \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -)."
+      rightDesc: `\uC77C\uBC18\uC801\uC778 \uC804\uAC01 \uBB38\uC7A5\uBD80\uD638, \uC601\uBB38 \uC778\uC6A9\uBD80\uD638(' "), \uB2EB\uB294 \uAD04\uD638(] ) }), \uADF8\uB9AC\uACE0 \uC601\uBB38 \uBC18\uAC01 \uBB38\uC7A5\uBD80\uD638(. , ? ! : ;)\uAC00 \uC624\uB978\uCABD \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4 \uAE30\uD638\uB85C \uB0B4\uC7A5\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC5EC\uAE30\uC5D0 \uCD94\uAC00 \uC624\uB978\uCABD \uAE30\uD638\uB97C \uCD94\uAC00\uD558\uC138\uC694 (\uC608: -).`
     },
     customScriptCategories: {
       name: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uBB38\uC790 \uBC94\uC8FC",
@@ -2888,7 +2900,11 @@ var locale6 = {
     },
     userDefinedRegexp: {
       name: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC815\uADDC\uC2DD, \uD55C \uC904\uC5D0 \uD558\uB098\uC529",
-      desc: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC815\uADDC\uC2DD\uC73C\uB85C \uB9E4\uCE6D\uB41C \uCF58\uD150\uCE20\uB294 \uC11C\uC2DD\uC774 \uC801\uC6A9\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uD55C \uC904\uC5D0 \uD558\uB098\uC529 \uC791\uC131\uD558\uBA70, \uC904 \uB05D\uC5D0 \uACF5\uBC31\uC744 \uCD94\uAC00\uD558\uC9C0 \uB9C8\uC138\uC694.\uAC01 \uC904\uC758 \uB9C8\uC9C0\uB9C9 3\uC790\uB294 |\uC640 \uB450 \uAC1C\uC758 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB85C \uACE0\uC815\uB429\uB2C8\uB2E4. \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 - = +\uC774\uBA70, \uAC01\uAC01 \uAC04\uACA9 \uBD88\uD544\uC694(-), \uC18C\uD504\uD2B8 \uC2A4\uD398\uC774\uC2A4(=), \uC5C4\uACA9\uD55C \uC2A4\uD398\uC774\uC2A4(+)\uB97C \uC758\uBBF8\uD569\uB2C8\uB2E4.\uC774 \uB450 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 \uB9E4\uCE6D \uBE14\uB85D\uC758 \uC67C\uCABD\uACFC \uC624\uB978\uCABD\uC758 \uAC04\uACA9 \uC804\uB7B5\uC785\uB2C8\uB2E4."
+      desc: "\uC0AC\uC6A9\uC790 \uC815\uC758 \uC815\uADDC\uC2DD\uC73C\uB85C \uB9E4\uCE6D\uB41C \uCF58\uD150\uCE20\uB294 \uC11C\uC2DD\uC774 \uC801\uC6A9\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uD55C \uC904\uC5D0 \uD558\uB098\uC529 \uC791\uC131\uD558\uBA70, \uC904 \uB05D\uC5D0 \uACF5\uBC31\uC744 \uCD94\uAC00\uD558\uC9C0 \uB9C8\uC138\uC694.\uAC01 \uC904\uC758 \uB9C8\uC9C0\uB9C9 3\uC790\uB294 |\uC640 \uB450 \uAC1C\uC758 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB85C \uACE0\uC815\uB429\uB2C8\uB2E4. \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 - = +\uC774\uBA70, \uAC01\uAC01 \uAC04\uACA9 \uBD88\uD544\uC694(-), \uC18C\uD504\uD2B8\uC6E8\uC5B4 \uC2A4\uD398\uC774\uC2A4(=), \uC5C4\uACA9\uD55C \uC2A4\uD398\uC774\uC2A4(+)\uB97C \uC758\uBBF8\uD569\uB2C8\uB2E4.\uC774 \uB450 \uAC04\uACA9 \uC804\uB7B5 \uAE30\uD638\uB294 \uB9E4\uCE6D \uBE14\uB85D\uC758 \uC67C\uCABD\uACFC \uC624\uB978\uCABD\uC758 \uAC04\uACA9 \uC804\uB7B5\uC785\uB2C8\uB2E4. // \uB85C \uC2DC\uC791\uD558\uB294 \uC904\uC740 \uC8FC\uC11D\uC73C\uB85C \uCC98\uB9AC\uB429\uB2C8\uB2E4."
+    },
+    userRulesRespectUserDefinedRegexBlocks: {
+      name: "\uC0AC\uC6A9\uC790 \uADDC\uCE59\uC774 \uCEE4\uC2A4\uD140 \uC815\uADDC\uC2DD \uBE14\uB85D\uC744 \uC900\uC218",
+      desc: "\uD65C\uC131\uD654 \uC2DC \uCEE4\uC2A4\uD140 \uC815\uADDC\uC2DD \uBE14\uB85D\uC5D0 \uB9E4\uCE6D\uB41C \uD14D\uC2A4\uD2B8\uB294 \uC790\uB3D9 \uC0AC\uC6A9\uC790 \uADDC\uCE59\uC744 \uD2B8\uB9AC\uAC70\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
     },
     excludeFoldersFiles: {
       name: "\uC81C\uC678 \uD3F4\uB354/\uD30C\uC77C",
@@ -3020,10 +3036,6 @@ var locale6 = {
     aboutRegexp: {
       header: "\uC815\uADDC\uC2DD\uC5D0 \uB300\uD55C \uC790\uC138\uD55C \uB0B4\uC6A9\uC740 \uB2E4\uC74C\uC744 \uCC38\uC870\uD558\uC138\uC694: ",
       text: "\uC815\uADDC\uC2DD \uAC04\uACB0 \uD29C\uD1A0\uB9AC\uC5BC"
-    },
-    instructionsRegexp: {
-      header: "\uC815\uADDC\uC2DD \uADDC\uCE59 \uC0AC\uC6A9 \uC548\uB0B4 \uBC0F \uC608\uC2DC: ",
-      text: "\uC815\uADDC\uC2DD \uADDC\uCE59 \uC0AC\uC6A9\uC790 \uC815\uC758"
     },
     customizeSelectionRule: "\uC120\uD0DD \uB300\uCCB4 \uADDC\uCE59 \uC0AC\uC6A9\uC790 \uC815\uC758",
     customizeDeleteRule: "\uC0AD\uC81C \uADDC\uCE59 \uC0AC\uC6A9\uC790 \uC815\uC758",
@@ -3206,8 +3218,12 @@ var RuleEngine = class {
     }
     return null;
   }
-  static escapeText(text) {
-    return text.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\r/g, "\\r");
+  static escapeText(text, preserveBackslashes = false) {
+    let result = text;
+    if (!preserveBackslashes) {
+      result = result.replace(/\\/g, "\\\\");
+    }
+    return result.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\r/g, "\\r");
   }
   static unescapeText(text) {
     let result = "";
@@ -3680,6 +3696,7 @@ var DEFAULT_BUILTIN_RULES = [
     replacement: "const m={',':'\uFF0C','.':'\u3002','?':'\uFF1F','!':'\uFF01',':':'\uFF1A',';':'\uFF1B','(':'\uFF08$0\uFF09'}; return leftMatches[1] + m[leftMatches[2]];",
     options: "rF",
     priority: 15,
+    enabled: false,
     description: "CJK\u5B57\u7B26\u540E\u534A\u89D2\u6807\u70B9\u8F6C\u5168\u89D2"
   },
   {
@@ -3932,9 +3949,9 @@ var RuleEditModal = class extends import_obsidian4.Modal {
       this.ruleScopes = opts.scope.length > 0 ? [...opts.scope] : ["all" /* All */];
     }
     if (initial.trigger !== void 0)
-      this.trigger = RuleEngine.escapeText(initial.trigger);
+      this.trigger = RuleEngine.escapeText(initial.trigger, this.isRegex);
     if (initial.trigger_right !== void 0)
-      this.triggerRight = RuleEngine.escapeText(initial.trigger_right);
+      this.triggerRight = RuleEngine.escapeText(initial.trigger_right, this.isRegex);
     if (typeof initial.replacement === "string")
       this.replacement = initial.replacement;
     if (initial.regex_flags !== void 0)
@@ -4044,11 +4061,12 @@ var RuleEditModal = class extends import_obsidian4.Modal {
       this.isFunction = !this.isFunction;
       this.refreshVisibility(contentEl);
     });
-    const replacementSetting = new import_obsidian4.Setting(replacementGroup).setName(locale7.settings.ruleEditModal.fieldReplacement);
+    const replacementSetting = new import_obsidian4.Setting(replacementGroup);
     replacementSetting.settingEl.addClass("et-replacement-setting");
     replacementSetting.settingEl.dataset.field = "replacementTextarea";
     const replacementArea = new import_obsidian4.TextAreaComponent(replacementSetting.controlEl);
     replacementArea.inputEl.addClass("et-replacement-textarea");
+    replacementArea.inputEl.setAttribute("aria-label", locale7.settings.ruleEditModal.fieldReplacement);
     replacementArea.setValue(this.replacement);
     replacementArea.onChange((v) => this.replacement = v);
     const replacementHint = replacementGroup.createEl("div", {
@@ -4058,11 +4076,8 @@ var RuleEditModal = class extends import_obsidian4.Modal {
     replacementHint.dataset.field = "replacementHint";
     const editorWrapper = replacementGroup.createDiv();
     editorWrapper.dataset.field = "fnEditor";
-    editorWrapper.createEl("label", {
-      text: locale7.settings.ruleEditModal.fieldReplacement,
-      cls: "et-fn-editor-label"
-    });
     const editorContainer = editorWrapper.createDiv({ cls: "et-fn-editor-container" });
+    editorContainer.setAttribute("aria-label", locale7.settings.ruleEditModal.fieldReplacement);
     this.cmEditor = createJSEditorView(editorContainer, this.replacement, (value) => {
       this.replacement = value;
     });
@@ -4266,8 +4281,8 @@ var RuleEditModal = class extends import_obsidian4.Modal {
         options += "c";
     }
     return {
-      trigger: RuleEngine.unescapeText(this.trigger),
-      trigger_right: RuleEngine.unescapeText(this.triggerRight) || void 0,
+      trigger: this.isRegex ? this.trigger : RuleEngine.unescapeText(this.trigger),
+      trigger_right: (this.isRegex ? this.triggerRight : RuleEngine.unescapeText(this.triggerRight)) || void 0,
       replacement: this.replacement,
       options: options || void 0,
       priority: this.priority,
@@ -4698,10 +4713,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     const regexInfoDiv = regexSection.bodyEl.createDiv({ cls: "setting-item-description et-settings-section-desc" });
     regexInfoDiv.appendChild(createFragment((frag) => {
       frag.appendText(locale7.headers.aboutRegexp.header);
-      const a1 = frag.createEl("a", { text: locale7.headers.aboutRegexp.text, href: "https://javascript.ruanyifeng.com/stdlib/regexp.html#" });
-      frag.createEl("br");
-      frag.appendText(locale7.headers.instructionsRegexp.header);
-      const a2 = frag.createEl("a", { text: locale7.headers.instructionsRegexp.text, href: "https://github.com/Yaozhuwa/easy-typing-obsidian/blob/master/UserDefinedRegExp.md" });
+      frag.createEl("a", { text: locale7.headers.aboutRegexp.text, href: "https://javascript.ruanyifeng.com/stdlib/regexp.html#" });
     }));
     const regSwitchSetting = new import_obsidian5.Setting(regexSection.bodyEl).setName(locale7.settings.userDefinedRegexpSwitch.name).setDesc(locale7.settings.userDefinedRegexpSwitch.desc).addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.UserDefinedRegSwitch).onChange(async (value) => {
@@ -4718,6 +4730,12 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     regContentArea.setValue(this.plugin.settings.UserDefinedRegExp).onChange(async (value) => {
       this.plugin.settings.UserDefinedRegExp = value;
       this.plugin.saveSettings();
+    });
+    new import_obsidian5.Setting(regexSection.bodyEl).setName(locale7.settings.userRulesRespectUserDefinedRegexBlocks.name).setDesc(locale7.settings.userRulesRespectUserDefinedRegexBlocks.desc).addToggle((toggle) => {
+      toggle.setValue(this.plugin.settings.UserRulesRespectUserDefinedRegexBlocks).onChange(async (value) => {
+        this.plugin.settings.UserRulesRespectUserDefinedRegexBlocks = value;
+        await this.plugin.saveSettings();
+      });
     });
     const excludeSection = this.createSection(el, locale7.headers.excludeFoldersFiles, locale7.settings.excludeFoldersFiles.desc);
     const excludeSetting = new import_obsidian5.Setting(excludeSection.bodyEl);
@@ -4774,7 +4792,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         new import_obsidian5.Notice(locale7.toolTip.resetSuccess);
         this.display();
       });
-    });
+    }, "et-builtin-rules-section");
     for (const rule of this.plugin.ruleManager.cachedBuiltinRules) {
       this.buildRuleItem(section.bodyEl, rule, true);
     }
@@ -4789,7 +4807,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         const opts = RuleEngine.parseOptions(defaultRule.options);
         const typeLabel = this.getRuleTypeLabel(opts.type);
         const typeCls = this.getRuleTypeCls(opts.type);
-        const preview = defaultRule.id && locale7.builtinRuleDescriptions[defaultRule.id] || defaultRule.description || `${RuleEngine.escapeText(defaultRule.trigger)} \u2192 ${typeof defaultRule.replacement === "string" ? defaultRule.replacement : "(fn)"}`;
+        const preview = defaultRule.id && locale7.builtinRuleDescriptions[defaultRule.id] || defaultRule.description || `${RuleEngine.escapeText(defaultRule.trigger, opts.isRegex)} \u2192 ${typeof defaultRule.replacement === "string" ? defaultRule.replacement : "(fn)"}`;
         new import_obsidian5.Setting(details).setName(createFragment((f) => {
           f.createSpan({ cls: `et-rule-type-tag ${typeCls}`, text: typeLabel });
           f.createSpan({ text: preview });
@@ -4875,7 +4893,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
         document.body.appendChild(input);
         input.click();
       });
-    });
+    }, "et-user-rules-section");
     this.plugin.ruleManager.cachedUserRules.forEach((rule, index) => {
       this.buildRuleItem(section.bodyEl, rule, false, index);
     });
@@ -4890,17 +4908,13 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
     const isFn = opts.isFunctionReplacement;
     const scopeBadges = this.getRuleScopeBadges(opts.scope, rule.scope_language, locale7);
     let preview;
-    const localeDesc = rule.id ? locale7.builtinRuleDescriptions[rule.id] : void 0;
-    if (localeDesc) {
-      preview = localeDesc;
-    } else if (rule.description) {
+    if (rule.description) {
       preview = rule.description;
     } else {
       const repl = typeof rule.replacement === "string" ? rule.replacement : "(fn)";
-      preview = `${RuleEngine.escapeText(rule.trigger)}${rule.trigger_right ? " \u2026 " + RuleEngine.escapeText(rule.trigger_right) : ""} \u2192 ${repl}`;
+      const renderMatch = (text) => RuleEngine.escapeText(text, opts.isRegex);
+      preview = `${renderMatch(rule.trigger)}${rule.trigger_right ? " \u2026 " + renderMatch(rule.trigger_right) : ""} \u2192 ${repl}`;
     }
-    if (preview.length > 60)
-      preview = preview.substring(0, 57) + "...";
     const setting = new import_obsidian5.Setting(container).setClass("et-rule-item").setName(createFragment((f) => {
       f.createSpan({ cls: `et-rule-type-tag ${typeCls}`, text: typeLabel });
       scopeBadges.forEach((badge) => {
@@ -4922,7 +4936,7 @@ var EasyTypingSettingTab = class extends import_obsidian5.PluginSettingTab {
       if (isFn) {
         f.createSpan({ cls: "et-rule-type-tag et-rule-type-fn", text: "Fn" });
       }
-      f.createSpan({ text: preview });
+      f.createSpan({ cls: "et-rule-preview-text", text: preview });
     })).addToggle((toggle) => {
       toggle.setValue(enabled).setTooltip(locale7.toolTip.enableRule).onChange(async (value) => {
         setting.settingEl.style.opacity = value ? "" : "0.5";
@@ -5230,6 +5244,16 @@ var RuleManager = class {
     this.USER_RULES_FILE = "user-rules.json";
     this.previousStoragePath = settings.rulesStoragePath;
   }
+  getLocalizedBuiltinRules(rules = DEFAULT_BUILTIN_RULES) {
+    const localeDescMap = getLocale().builtinRuleDescriptions;
+    return rules.map((rule) => {
+      var _a;
+      return {
+        ...rule,
+        description: (_a = localeDescMap[rule.id]) != null ? _a : rule.description
+      };
+    });
+  }
   getImportDedupKey(rule) {
     var _a, _b;
     const isRegex = ((_a = rule.options) != null ? _a : "").includes("r");
@@ -5260,7 +5284,7 @@ var RuleManager = class {
     const newRules = DEFAULT_BUILTIN_RULES.filter((r) => !existingIds.has(r.id) && !deletedIds.has(r.id));
     if (newRules.length === 0)
       return;
-    await this.saveRulesFile(this.BUILTIN_RULES_FILE, [...currentRules, ...newRules]);
+    await this.saveRulesFile(this.BUILTIN_RULES_FILE, [...currentRules, ...this.getLocalizedBuiltinRules(newRules)]);
   }
   async initRuleEngine() {
     this.ruleEngine = new RuleEngine();
@@ -5270,7 +5294,7 @@ var RuleManager = class {
     const builtinPath = this.pluginPath(this.BUILTIN_RULES_FILE);
     const userPath = this.pluginPath(this.USER_RULES_FILE);
     if (!await this.app.vault.adapter.exists(builtinPath)) {
-      await this.saveRulesFile(this.BUILTIN_RULES_FILE, DEFAULT_BUILTIN_RULES);
+      await this.saveRulesFile(this.BUILTIN_RULES_FILE, this.getLocalizedBuiltinRules());
     } else {
       await this.mergeBuiltinRules();
     }
@@ -5294,14 +5318,15 @@ var RuleManager = class {
     const defaultRule = DEFAULT_BUILTIN_RULES.find((r) => r.id === id);
     if (!defaultRule)
       return;
-    this.ruleEngine.addSimpleRule(defaultRule);
-    this.cachedBuiltinRules.push(defaultRule);
+    const localizedRule = this.getLocalizedBuiltinRules([defaultRule])[0];
+    this.ruleEngine.addSimpleRule(localizedRule);
+    this.cachedBuiltinRules.push(localizedRule);
     await this.saveRulesFile(this.BUILTIN_RULES_FILE, this.cachedBuiltinRules);
     this.settings.deletedBuiltinRuleIds = this.settings.deletedBuiltinRuleIds.filter((i) => i !== id);
     await this.savePluginSettings();
   }
   async resetAllBuiltinRules() {
-    this.cachedBuiltinRules = [...DEFAULT_BUILTIN_RULES];
+    this.cachedBuiltinRules = this.getLocalizedBuiltinRules();
     await this.saveRulesFile(this.BUILTIN_RULES_FILE, this.cachedBuiltinRules);
     this.settings.deletedBuiltinRuleIds = [];
     await this.savePluginSettings();
@@ -5907,7 +5932,16 @@ function deleteBlankLines(ctx, editor) {
   const RE_QUOTE = /^\s*>/;
   const RE_BLOCKID = /\s\^[\w-]+\s*$/;
   const RE_HR = /^\s*(?:---+|\*\*\*+|___+)\s*$/;
-  const needsTrailingBlank = (text) => RE_LIST.test(text) || RE_QUOTE.test(text) || RE_BLOCKID.test(text);
+  const getTrailingBlankType = (text) => {
+    if (RE_LIST.test(text))
+      return "list";
+    if (RE_QUOTE.test(text))
+      return "quote";
+    if (RE_BLOCKID.test(text))
+      return "blockid";
+    return null;
+  };
+  const needsTrailingBlank = (text) => getTrailingBlankType(text) !== null;
   let start_line = 1;
   let end_line = doc.lines;
   let line_num = doc.lines;
@@ -5926,11 +5960,14 @@ function deleteBlankLines(ctx, editor) {
   }
   let delete_index = [];
   let remain_next_blank = false;
+  let remain_next_blank_type = null;
   let consecutiveBlanks = 0;
   if (start_line != 1) {
     const prevText = doc.line(start_line - 1).text;
-    if (needsTrailingBlank(prevText)) {
+    const prevType = getTrailingBlankType(prevText);
+    if (prevType) {
       remain_next_blank = true;
+      remain_next_blank_type = prevType;
     }
   }
   if (end_line != line_num && !RE_BLANK.test(doc.line(end_line + 1).text)) {
@@ -5942,18 +5979,19 @@ function deleteBlankLines(ctx, editor) {
     if (RE_BLANK.test(text)) {
       consecutiveBlanks++;
       if (remain_next_blank) {
-        let nextNonBlankIsBlock = false;
+        let nextNonBlankType = null;
         for (let j = i + 1; j <= end_line; j++) {
           const jText = doc.line(j).text;
           if (!RE_BLANK.test(jText)) {
-            nextNonBlankIsBlock = needsTrailingBlank(jText);
+            nextNonBlankType = getTrailingBlankType(jText);
             break;
           }
         }
-        if (nextNonBlankIsBlock) {
+        if (remain_next_blank_type && nextNonBlankType === remain_next_blank_type) {
           delete_index.push(i);
         }
         remain_next_blank = false;
+        remain_next_blank_type = null;
         continue;
       }
       if (strictLineBreaks && consecutiveBlanks === 1) {
@@ -5967,8 +6005,10 @@ function deleteBlankLines(ctx, editor) {
       delete_index.pop();
     } else if (needsTrailingBlank(text)) {
       remain_next_blank = true;
+      remain_next_blank_type = getTrailingBlankType(text);
     } else {
       remain_next_blank = false;
+      remain_next_blank_type = null;
     }
   }
   let newContent = "";
@@ -6147,7 +6187,7 @@ var CursorWidget = class extends import_view3.WidgetType {
 
 // src/rule_processor.ts
 function triggerCvtRule(ctx, view, cursor_pos, changeType = "input.type") {
-  var _a;
+  var _a, _b, _c;
   const inputScope = detectRuleScope(view.state, cursor_pos);
   const cvtCtx = {
     kind: "input" /* Input */,
@@ -6159,6 +6199,14 @@ function triggerCvtRule(ctx, view, cursor_pos, changeType = "input.type") {
     scopeLanguage: inputScope.language,
     debug: (_a = ctx.settings) == null ? void 0 : _a.debug
   };
+  if (((_b = ctx.settings) == null ? void 0 : _b.UserDefinedRegSwitch) && ((_c = ctx.settings) == null ? void 0 : _c.UserRulesRespectUserDefinedRegexBlocks)) {
+    const line = view.state.doc.lineAt(cursor_pos);
+    const column = cursor_pos - line.from;
+    const checkColumn = changeType.startsWith("input") ? Math.max(0, column - 1) : column;
+    if (isCursorInUserDefinedRegexBlock(line.text, checkColumn, ctx.settings.UserDefinedRegExp)) {
+      return false;
+    }
+  }
   const cvtResult = ctx.ruleEngine.process(cvtCtx);
   if (cvtResult) {
     const tabstopGroups = tabstopSpecsToTabstopGroups(cvtResult.tabstops);
@@ -6864,14 +6912,22 @@ function createTransactionFilter(ctx) {
           const tabstopGroups = tabstopSpecsToTabstopGroups(selResult.tabstops);
           if (tabstopGroups.length > 0) {
             changes.push({
-              changes: { from: selResult.matchRange.from, to: selResult.matchRange.to, insert: selResult.newText },
+              changes: {
+                from: selResult.matchRange.from,
+                to: selResult.matchRange.to,
+                insert: selResult.newText
+              },
               selection: tabstopGroups[0].toEditorSelection(),
               effects: [addTabstopsEffect.of(tabstopGroups)],
               userEvent: "EasyTyping.change"
             });
           } else {
             changes.push({
-              changes: { from: selResult.matchRange.from, to: selResult.matchRange.to, insert: selResult.newText },
+              changes: {
+                from: selResult.matchRange.from,
+                to: selResult.matchRange.to,
+                insert: selResult.newText
+              },
               selection: { anchor: selResult.cursor },
               userEvent: "EasyTyping.change"
             });
@@ -6989,12 +7045,26 @@ function createTransactionFilter(ctx) {
         if (list_code_indent !== 0) {
           print("list_code, indent: ", list_code_indent);
           if (toA == cur_line.from + list_code_indent) {
-            changes.push({ changes: { from: tr.startState.doc.line(line_number - 1).to, to: toA, insert: "" }, userEvent: "EasyTyping.change" });
+            changes.push({
+              changes: {
+                from: tr.startState.doc.line(line_number - 1).to,
+                to: toA,
+                insert: ""
+              },
+              userEvent: "EasyTyping.change"
+            });
             tr = tr.startState.update(...changes);
             return tr;
           }
           if (fromA >= cur_line.from && fromA < cur_line.from + list_code_indent && toA > cur_line.from + list_code_indent) {
-            changes.push({ changes: { from: cur_line.from + list_code_indent, to: toA, insert: "" }, userEvent: "EasyTyping.change" });
+            changes.push({
+              changes: {
+                from: cur_line.from + list_code_indent,
+                to: toA,
+                insert: ""
+              },
+              userEvent: "EasyTyping.change"
+            });
             tr = tr.startState.update(...changes);
             return tr;
           }
@@ -7017,14 +7087,22 @@ function createTransactionFilter(ctx) {
           const tabstopGroups = tabstopSpecsToTabstopGroups(delResult.tabstops);
           if (tabstopGroups.length > 0) {
             changes.push({
-              changes: { from: delResult.matchRange.from, to: delResult.matchRange.to, insert: delResult.newText },
+              changes: {
+                from: delResult.matchRange.from,
+                to: delResult.matchRange.to,
+                insert: delResult.newText
+              },
               selection: tabstopGroups[0].toEditorSelection(),
               effects: [addTabstopsEffect.of(tabstopGroups)],
               userEvent: "EasyTyping.change"
             });
           } else {
             changes.push({
-              changes: { from: delResult.matchRange.from, to: delResult.matchRange.to, insert: delResult.newText },
+              changes: {
+                from: delResult.matchRange.from,
+                to: delResult.matchRange.to,
+                insert: delResult.newText
+              },
               selection: { anchor: delResult.cursor },
               userEvent: "EasyTyping.change"
             });
@@ -7041,7 +7119,7 @@ function tryProcessInput(ctx, update, changeFrom, cursorPos, changeType = "input
   const lineType = getPosLineType(update.view.state, cursorPos);
   if (lineType === "table" /* table */)
     return false;
-  if (triggerCvtRule(ctx, update.view, cursorPos))
+  if (!changeType.includes("paste") && changeType !== "unknown" && !ctx.pasteDetected && triggerCvtRule(ctx, update.view, cursorPos, changeType))
     return true;
   if (!ctx.settings.AutoFormat || isCurrentFileExclude(ctx))
     return false;
@@ -7054,7 +7132,10 @@ function tryProcessInput(ctx, update, changeFrom, cursorPos, changeType = "input
   if (changes) {
     const allSpecs = changes[0];
     if (allSpecs.length > 0) {
-      allSpecs[allSpecs.length - 1] = { ...allSpecs[allSpecs.length - 1], ...changes[1] };
+      allSpecs[allSpecs.length - 1] = {
+        ...allSpecs[allSpecs.length - 1],
+        ...changes[1]
+      };
     }
     update.view.dispatch(...allSpecs);
     return true;
@@ -7094,7 +7175,7 @@ function createViewUpdatePlugin(ctx) {
     if (ctx.compose_need_handle) {
       ctx.compose_need_handle = false;
       const cursor2 = update.view.state.selection.asSingle().main;
-      if (cursor2.head === cursor2.anchor) {
+      if (cursor2.head === cursor2.anchor && cursor2.anchor > ctx.compose_begin_pos) {
         if (tryProcessInput(ctx, update, ctx.compose_begin_pos, cursor2.anchor))
           return;
       }
@@ -7405,6 +7486,5 @@ var EasyTypingPlugin = class extends import_obsidian9.Plugin {
     await this.saveData(this.settings);
   }
 };
-
 
 /* nosourcemap */
