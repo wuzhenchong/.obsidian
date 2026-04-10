@@ -1,5 +1,5 @@
 {
-  "openViewOnStartup": true,
+  "openViewOnStartup": false,
   "filterEmpty": true,
   "excludePaths": [],
   "includePaths": [],
@@ -50,7 +50,7 @@
   "useQuickEntry": false,
   "entryPosition": "today",
   "useYearHeader": true,
-  "useRelative": false,
+  "useRelative": true,
   "useRecurrence": true,
   "usePriority": true,
   "useTags": true,
