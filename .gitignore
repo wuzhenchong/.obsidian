@@ -2,9 +2,8 @@ plugins/github-copilot
 
 # 最近打开文件
 plugins/recent-files-obsidian/data.json
+plugins/claudian/data.json
 
+# 外观
 appearance.json
 workspace.json
-
-
-plugins/claudian/data.json
