@@ -65,16 +65,18 @@
     "replacement": "const m={',':'，','.':'。','?':'？','!':'！',':':'：',';':'；','(':'（$0）'}; return leftMatches[1] + m[leftMatches[2]];",
     "options": "rF",
     "priority": 15,
+    "enabled": true,
     "description": "CJK字符后半角标点转全角"
   },
   {
-    "id": "builtin-fw2hw-double",
     "trigger": "([。！；，：？》｜（《])\\1",
     "trigger_right": "[）》]?",
-    "replacement": "const p={'（':['）','($0)'],'《':['》','<$0']};\nconst m={'。':'.$0','！':'!$0','；':';$0','，':',$0','：':':$0','？':'?$0','》':'>$0','｜':'|$0','（':'($0)','《':'<$0'};\nconst c=leftMatches[1],r=rightMatches[0]||'',e=p[c]; \nreturn e&&e[0]===r?e[1]:m[c];",
+    "replacement": "const p={'（':['）','($0)'],'《':['》','<$0>']};\nconst m={'。':'.$0','！':'!$0','；':';$0','，':',$0','：':':$0','？':'?$0','》':'>$0','｜':'|$0','（':'($0)','《':'<$0'};\nconst c=leftMatches[1],r=rightMatches[0]||'',e=p[c]; \nreturn e&&e[0]===r?e[1]:m[c];",
     "options": "rF",
     "priority": 3,
-    "description": "连续输入两个相同全角标点转对应半角"
+    "description": "连续输入两个相同全角标点转对应半角",
+    "enabled": true,
+    "id": "builtin-fw2hw-double"
   },
   {
     "id": "builtin-del-inline-formula",
