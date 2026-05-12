@@ -5,6 +5,6 @@
     "obsidian-tasks-plugin:edit-task",
     "templater-obsidian:insert-templater",
     "open-tab-settings:toggle-open-in-new-tab",
-    "better-export-pdf:export-current-file-to-pdf"
+    "automatic-table-of-contents:insert-automatic-table-of-contents"
   ]
 }
