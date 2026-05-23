@@ -4,7 +4,7 @@
   "showFrontmatter": true,
   "showLineNumber": false,
   "newFileLocation": "root",
-  "useMarkdownLinks": true,
+  "useMarkdownLinks": false,
   "attachmentFolderPath": "_attach",
   "alwaysUpdateLinks": true,
   "showUnsupportedFiles": false,
