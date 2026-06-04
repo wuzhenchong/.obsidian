@@ -6,7 +6,7 @@
     "options": "rFt",
     "priority": 3,
     "description": "两个大括号转为直角引号",
-    "enabled": true,
+    "enabled": false,
     "id": "user-1778335647847-39mx"
   },
   {
@@ -15,7 +15,7 @@
     "options": "sF",
     "priority": 40,
     "description": "选中文字后输入 }，用直角引号包裹",
-    "enabled": true,
+    "enabled": false,
     "id": "user-sel-wrap-corner-quotes-braces"
   }
 ]
